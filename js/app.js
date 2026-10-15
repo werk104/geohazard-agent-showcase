@@ -41,7 +41,6 @@
       (c.demo.url === null || typeof c.demo.url === 'string') &&
       ['lan','eci','unconfirmed'].includes(c.demo.deploymentMode) && typeof c.demo.statusText === 'string' &&
       (c.demo.lastVerifiedAt === null || confirmedDate(c.demo.lastVerifiedAt)) &&
-      isObject(c.video) && ['url','poster','transcriptUrl'].every(k=>c.video[k]===null || typeof c.video[k]==='string') &&
       isObject(c.links) && ['githubRepositoryUrl','projectDocsUrl'].every(k=>c.links[k]===null || typeof c.links[k]==='string');
   }
   // Pure validation helpers can also be checked with Node, without a browser or npm packages.
@@ -70,7 +69,7 @@
   if (typeof dialog.showModal === 'function') {
     all('.media-open').forEach(b=>b.addEventListener('click',()=>{
       const src=assetUrl(b.dataset.src,document.baseURI);if(!src)return;
-      expanded.src=src;expanded.alt=b.dataset.alt||'';caption.textContent=b.dataset.caption||'';dialog.showModal();
+      expanded.src=src;expanded.alt=b.dataset.alt||'';caption.textContent=b.dataset.caption||'';dialog.classList.toggle('long-image',b.dataset.long==='true');dialog.showModal();dialog.scrollTop=0;
     }));
     $('.dialog-close').addEventListener('click',()=>dialog.close());
     dialog.addEventListener('click',event=>{
@@ -79,6 +78,38 @@
     });
     dialog.addEventListener('close',()=>{expanded.removeAttribute('src');});
   }
+  const comparisonStages=all('.comparison-stage');
+  all('input[data-compare]').forEach(range=>{
+    const key=range.dataset.compare;
+    const stage=comparisonStages.find(el=>el.dataset.comparison===key);
+    const output=$('#compare-output-'+key);
+    if(!stage || !output)return;
+    const update=()=>{
+      const value=Math.min(100,Math.max(0,Number(range.value)||0));
+      stage.style.setProperty('--split',value+'%');
+      output.value=value+'%';
+      range.setAttribute('aria-valuetext',`分界线在 ${value}% 位置，左侧输入，右侧掩膜叠加`);
+    };
+    range.addEventListener('input',update);update();
+    let activePointer=null;
+    const updateFromPointer=event=>{
+      const rect=stage.getBoundingClientRect();if(rect.width<=0)return;
+      range.value=String(Math.round(Math.min(100,Math.max(0,(event.clientX-rect.left)/rect.width*100))));
+      update();
+    };
+    stage.addEventListener('pointerdown',event=>{
+      if(event.button!==0 || activePointer!==null)return;
+      activePointer=event.pointerId;stage.setPointerCapture?.(event.pointerId);updateFromPointer(event);
+    });
+    stage.addEventListener('pointermove',event=>{if(event.pointerId===activePointer)updateFromPointer(event);});
+    const release=event=>{
+      if(event.pointerId!==activePointer)return;
+      if(stage.hasPointerCapture?.(event.pointerId))stage.releasePointerCapture(event.pointerId);
+      activePointer=null;
+    };
+    stage.addEventListener('pointerup',release);stage.addEventListener('pointercancel',release);
+  });
+  all('.comparison-controls').forEach(el=>{el.hidden=false;});
   document.documentElement.classList.add('enhanced');
   function attachLink(id,url) {
     const el=$(id);if(!url)return;
@@ -99,13 +130,6 @@
       } else if(c.demo.enabled===false && c.demo.statusText) $('#demo-status').textContent=c.demo.statusText;
       attachLink('#repository-link',publicHttps(c.links.githubRepositoryUrl));
       attachLink('#docs-link',publicHttps(c.links.projectDocsUrl));
-      const videoUrl=assetUrl(c.video.url,document.baseURI), poster=assetUrl(c.video.poster,document.baseURI), transcript=assetUrl(c.video.transcriptUrl,document.baseURI);
-      // Show recording only with a cover and equivalent text; otherwise keep the readable empty state.
-      if(videoUrl && poster && transcript) {
-        const video=$('#demo-video');video.src=videoUrl;video.poster=poster;video.hidden=false;$('#video-empty').hidden=true;
-        attachLink('#transcript-link',transcript);
-        video.addEventListener('error',()=>{video.hidden=true;$('#video-empty').hidden=false;$('#video-empty h3').textContent='录屏暂时无法加载';},{once:true});
-      }
     } catch (_) {
       // Missing/broken configuration fails closed. All generated core content remains visible.
       $('#demo-status').textContent='实时入口未配置，可继续阅读项目内容';

@@ -1,0 +1,110 @@
+{
+  "purpose": "Static visualizations of user-provided rasters; no inference or accuracy evaluation.",
+  "sources": [
+    {
+      "name": "滑坡识别示例.tif",
+      "sha256": "803857d3451b22537ded31b7fd5213bf98991d9cd896381681936013542c4bf8",
+      "width": 399,
+      "height": 327,
+      "bands": 26,
+      "dtype": "float32",
+      "pixelSize": [
+        10.0,
+        10.0
+      ]
+    },
+    {
+      "name": "滑坡识别示例_结果.tif",
+      "sha256": "14c665d77bc324fab6c45d8d9edfa037be9f5185a9ec5d403cdfd3abf2c17169",
+      "width": 1161,
+      "height": 954,
+      "bands": 1,
+      "dtype": "uint8",
+      "pixelSize": [
+        3.4370708871662594,
+        3.437005765199177
+      ]
+    },
+    {
+      "name": "裂缝识别示例.tif",
+      "sha256": "a1b70e05802a5858fcbdba47806c72b83b8342d4a42923ace31860c34129914c",
+      "width": 1204,
+      "height": 822,
+      "bands": 3,
+      "dtype": "uint8",
+      "pixelSize": [
+        0.02115337441652777,
+        0.02115337441652777
+      ]
+    },
+    {
+      "name": "裂缝识别示例_结果.tif",
+      "sha256": "00c7a54009ceb60c0e823373eca43177fa34296af1744537fcd50b3140d47e42",
+      "width": 1204,
+      "height": 822,
+      "bands": 1,
+      "dtype": "uint8",
+      "pixelSize": [
+        0.02115337441652777,
+        0.02115337441652777
+      ]
+    }
+  ],
+  "processing": {
+    "landslide": {
+      "mappingBasis": "User supplied 26-band order; TIFF has no band descriptions.",
+      "preRGBChannelsOneBased": [
+        3,
+        2,
+        1
+      ],
+      "postRGBChannelsOneBased": [
+        15,
+        14,
+        13
+      ],
+      "sharedRGBPercentileLimits": [
+        [
+          1213.0,
+          2928.0
+        ],
+        [
+          1414.0,
+          2768.0
+        ],
+        [
+          1230.0,
+          2390.0
+        ]
+      ],
+      "percentiles": [
+        2,
+        98
+      ],
+      "displayGamma": 1.15,
+      "sameOriginalGrid": false,
+      "sourceCRSEqualsResultCRS": true,
+      "alignment": "RGB bilinear warp to result grid; prediction mask was not resampled, dilated, eroded, or edited.",
+      "resultForegroundPixels": 38144,
+      "foregroundOutsideValidRGB": 10,
+      "imageValidPixelsOnResultGrid": 1105272,
+      "overlayAlpha": 0.55,
+      "maskOutput": "0 -> black, 1 -> white; 255 in preview is foreground display intensity, not source nodata.",
+      "exportShape": [
+        954,
+        1161
+      ]
+    },
+    "crack": {
+      "sameOriginalGrid": true,
+      "rgbProcessing": "Original uint8 RGB, no contrast stretch or resampling.",
+      "resultForegroundPixels": 11890,
+      "overlayAlpha": 0.55,
+      "exportShape": [
+        822,
+        1204
+      ]
+    },
+    "allExports": "New PNG/WebP images without georeferencing, EXIF, or original TIFF metadata; source rasters remain unchanged."
+  }
+}

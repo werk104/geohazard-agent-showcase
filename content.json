@@ -23,6 +23,13 @@
       "GPU API",
       "Docker",
       "OpenLayers"
+    ],
+    "visualEyebrow": "LANDSLIDE / RESULT PREVIEW",
+    "visualBadge": "真实案例 · 静态成果",
+    "visualSteps": [
+      "事件后影像",
+      "候选掩膜",
+      "空间叠加"
     ]
   },
   "background": {
@@ -144,68 +151,101 @@
         "output": "可查看、可追踪的候选识别成果",
         "tool": "preview_geospatial_data"
       }
-    ]
+    ],
+    "inputText": "本例输入为哨兵二号 L2A 双时相 26 通道栅格。分别从前、后时相提取 B4 / B3 / B2 真彩色，使用相同显示拉伸参数，便于查看影像变化。"
   },
   "media": {
     "workbench": {
       "id": "P01",
-      "src": "./assets/images/p01-workbench.svg",
-      "alt": "P01 工作台全貌占位图，等待替换真实界面截图",
-      "caption": "P01 · 工作台全貌｜待补充可公开的真实界面截图",
-      "placeholder": true
+      "src": "./assets/images/workbench-overview.webp",
+      "alt": "真实 RSchat-GeoPreviewer 界面：会话控制、Agent 工具调用、OSS 文件管理与地图面板；截图处于运行中",
+      "caption": "P01 · 真实工作台概览｜运行中的界面截图，参数与会话编号已遮挡；点击查看完整长图",
+      "placeholder": false,
+      "fullSrc": "./assets/images/workbench-full.webp",
+      "width": 1656,
+      "height": 1802,
+      "scrollFull": true
     },
     "inputs": {
       "id": "P02",
-      "src": "./assets/images/p02-temporal-inputs.svg",
-      "alt": "P02 双时相输入占位图，等待替换同一区域前后时相影像",
-      "caption": "P02 · 双时相输入｜待补充同一区域的前、后时相影像",
-      "placeholder": true
+      "src": "./assets/images/temporal-inputs.webp",
+      "alt": "同一滑坡案例的事件前和事件后哨兵二号 L2A 真彩色影像，采用一致拉伸参数",
+      "caption": "P02 · 同一区域前后时相真彩色｜B4 / B3 / B2，共用显示拉伸参数",
+      "placeholder": false,
+      "width": 852,
+      "height": 419
     },
     "landslide": {
       "id": "P03",
-      "src": "./assets/images/p03-landslide.svg",
-      "alt": "P03 滑坡成果占位图，尚未展示模型识别结果",
-      "caption": "P03 · 滑坡候选掩膜叠加｜待补充真实配对成果",
-      "placeholder": true
+      "src": "./assets/images/landslide-overlay.webp",
+      "alt": "事件后影像与用户提供的滑坡候选掩膜，红色为预测像素1",
+      "caption": "P03 · 用户提供的滑坡结果｜红色为预测区域，叠加前已进行空间对齐",
+      "placeholder": false,
+      "width": 1161,
+      "height": 954
     },
     "crack": {
       "id": "P04",
-      "src": "./assets/images/p04-crack.svg",
-      "alt": "P04 裂缝成果占位图，尚未展示模型识别结果",
-      "caption": "P04 · UAV 裂缝独立案例｜待补充真实影像与掩膜叠加",
-      "placeholder": true
+      "src": "./assets/images/crack-overlay.webp",
+      "alt": "用户提供的 RGB 影像与对应裂缝候选掩膜，红色为预测像素1",
+      "caption": "P04 · 用户提供的裂缝结果｜RGB 与掩膜原始网格一致，红色为预测区域",
+      "placeholder": false,
+      "width": 1204,
+      "height": 822
     },
     "trace": {
       "id": "P05",
-      "src": "./assets/images/p05-tool-trace.svg",
-      "alt": "P05 工具调用记录占位图，等待替换脱敏的真实运行界面",
-      "caption": "P05 · 工具调用与成果记录｜待补充脱敏界面截图",
-      "placeholder": true
+      "src": "./assets/images/agent-tool-trace.webp",
+      "alt": "真实工具调用记录片段，可见两次影像获取完成以及栅格组合启动；参数与原始输出内容已遮挡",
+      "caption": "P05 · 真实工具调用片段｜显示数据获取完成与栅格组合启动，参数与原始输出内容已遮挡",
+      "placeholder": false,
+      "width": 1125,
+      "height": 533
+    },
+    "hero": {
+      "id": "P03-H",
+      "src": "./assets/images/landslide-overlay.webp",
+      "alt": "用户提供的滑坡预测掩膜以红色叠加于事件后哨兵二号真彩色影像",
+      "caption": "真实滑坡案例 · 事件后影像与候选掩膜叠加，红色表示预测区域",
+      "placeholder": false,
+      "width": 1161,
+      "height": 954
+    },
+    "mapPreview": {
+      "id": "P06",
+      "src": "./assets/images/map-preview-detail.webp",
+      "fullSrc": "./assets/images/map-preview-ui.webp",
+      "alt": "真实 GeoPreviewer 地图预览，影像与红色滑坡预测图层叠加，支持图层开关和透明度调整",
+      "caption": "P06 · 地图成果预览｜独立界面截图，内部路径已遮挡；点击查看完整界面",
+      "placeholder": false,
+      "width": 965,
+      "height": 550
     }
   },
   "results": {
     "title": "让结果可见，也让过程可解释。",
-    "intro": "以下预留两个独立案例。当前所有业务图片均为明确标注的占位图，真实影像与识别成果将在确认公开范围后替换。",
+    "intro": "使用本次提供的原始 TIFF 与对应预测掩膜导出真实案例。拖动分界线对比输入与红色掩膜叠加；也可查看二值掩膜或放大成果。所有交互均为静态回放。",
     "landslide": {
       "tag": "CASE A / LANDSLIDE",
       "title": "双时相滑坡识别",
-      "text": "围绕事件前后遥感影像完成组合、远程推理与候选掩膜预览。补图后可展示同一案例的输入、掩膜和叠加结果。",
+      "text": "哨兵二号 L2A 双时相光谱、NDVI、SCL 与地形信息组成 26 通道输入。当前展示事件后真彩色与提供的滑坡候选掩膜；前后时相输入见流程区。",
       "facts": [
-        "输入：双时相遥感与规定辅助通道",
-        "输出：单通道候选滑坡掩膜",
-        "范围：流程与成果展示，非精度评估"
+        "输入：26 通道，399 × 327 像素，10 m 网格",
+        "结果：单通道 0 / 1 掩膜，1161 × 954 像素",
+        "展示：结果网格约 3.437 m，按地理参考配准叠加"
       ]
     },
     "crack": {
-      "tag": "CASE B / CRACK · LAN",
+      "tag": "CASE B / RGB CRACK",
       "title": "RGB 裂缝识别",
-      "text": "对地理配准的 RGB 影像调用独立裂缝模型，并在地图中放大检查候选结果。与滑坡案例使用不同输入和模型。",
+      "text": "展示所提供 RGB 影像与其对应的裂缝预测掩膜。该案例与双时相滑坡案例分别使用自己的输入和结果，不拼接为一次执行过程。",
       "facts": [
-        "输入：地理配准 RGB 影像",
-        "输出：候选裂缝主掩膜",
-        "范围：LAN 独立任务，不属于云版默认能力"
+        "输入：3 通道 RGB，1204 × 822 像素",
+        "结果：单通道 0 / 1 掩膜，网格与输入一致",
+        "展示：保留原始 RGB；红色为提供的预测掩膜"
       ]
-    }
+    },
+    "footnote": "红色与白色均表示模型预测前景，不代表人工标注真值或识别精度。图像处理说明见案例图注；本页未重新运行模型。"
   },
   "engineering": {
     "title": "工程价值，体现在每一次交接。",
@@ -235,10 +275,8 @@
     "items": []
   },
   "demo": {
-    "title": "项目展示长期保留，实时服务按需开放。",
-    "text": "静态页面独立于 Agent 与 GPU 服务运行。当前可阅读项目说明和流程示意；演示录屏与真实成果图待补充。",
-    "videoEmpty": "演示录屏待补充",
-    "videoHint": "后续可提供真实执行录屏、封面与字幕或文字稿。"
+    "title": "在线交互服务按需开放。",
+    "text": "可查看真实工作台截图、工具调用片段及滑坡与裂缝案例。在线入口连接独立部署的服务，是否开放由管理员配置。"
   },
   "faq": [
     {
@@ -252,10 +290,111 @@
     {
       "question": "这些结果能作为灾害核定或精度证明吗？",
       "answer": "模型输出属于候选识别成果，需要专业人员复核。本页不提供统一测试集上的精度结论，也不将界面截图或测试数量作为模型性能证明。"
+    },
+    {
+      "question": "图中的红色区域、显示拉伸和空间对齐是什么意思？",
+      "answer": "红色来自所提供结果中像素值为 1 的区域，仅调整显示颜色与透明度。滑坡前后时相使用一致的真彩色拉伸；由于滑坡输入与结果原始网格不同，仅对 RGB 做地理配准重采样。裂缝 RGB 与掩膜网格一致，直接叠加。未对预测掩膜进行平滑、膨胀、腐蚀或补画。"
     }
   ],
   "footer": {
     "note": "面向研究与技术演示。候选识别成果需专业复核。",
-    "credits": "业务图片尚未加入。现有占位图与架构示意随站点提供。"
+    "credits": "真实影像、预测掩膜与界面截图由项目本人提供；界面中的参数、会话编号及内部路径已遮挡。"
+  },
+  "inputContract": {
+    "title": "26 通道：12 + 12 + 2",
+    "intro": "每个时相包含 10 个光谱波段、NDVI 与 SCL，再附加共享 DEM 和 SLOPE。以下编号均从 1 开始。",
+    "groups": [
+      {
+        "label": "PRE",
+        "count": "12",
+        "detail": "10 个光谱波段 + NDVI + SCL"
+      },
+      {
+        "label": "POST",
+        "count": "12",
+        "detail": "10 个光谱波段 + NDVI + SCL"
+      },
+      {
+        "label": "TERRAIN",
+        "count": "2",
+        "detail": "DEM + SLOPE"
+      }
+    ],
+    "rows": [
+      {
+        "channels": "1–10",
+        "name": "事件前光谱波段",
+        "order": "B2、B3、B4、B5、B6、B7、B8、B8A、B11、B12"
+      },
+      {
+        "channels": "11",
+        "name": "事件前 NDVI",
+        "order": "NDVI"
+      },
+      {
+        "channels": "12",
+        "name": "事件前 SCL",
+        "order": "场景分类层"
+      },
+      {
+        "channels": "13–22",
+        "name": "事件后光谱波段",
+        "order": "B2、B3、B4、B5、B6、B7、B8、B8A、B11、B12"
+      },
+      {
+        "channels": "23",
+        "name": "事件后 NDVI",
+        "order": "NDVI"
+      },
+      {
+        "channels": "24",
+        "name": "事件后 SCL",
+        "order": "场景分类层"
+      },
+      {
+        "channels": "25",
+        "name": "地形",
+        "order": "DEM"
+      },
+      {
+        "channels": "26",
+        "name": "坡度",
+        "order": "SLOPE"
+      }
+    ],
+    "rgbNote": "真彩色 RGB：事件前用第 3 / 2 / 1 通道；事件后用第 15 / 14 / 13 通道。B8A 包含在每个时相的 10 个光谱波段内；B1、B9 不进入该组合。"
+  },
+  "comparisons": {
+    "landslide": {
+      "enabled": true,
+      "input": "./assets/images/landslide-input.webp",
+      "overlay": "./assets/images/landslide-overlay.webp",
+      "mask": "./assets/images/landslide-mask.png",
+      "width": 1161,
+      "height": 954,
+      "inputLabel": "事件后真彩色",
+      "resultLabel": "候选掩膜叠加",
+      "note": "输入 RGB 已按地理参考重采样至结果网格用于叠加；不表示影像原始分辨率提高。原始预测掩膜未修改。"
+    },
+    "crack": {
+      "enabled": true,
+      "input": "./assets/images/crack-input.webp",
+      "overlay": "./assets/images/crack-overlay.webp",
+      "mask": "./assets/images/crack-mask.png",
+      "width": 1204,
+      "height": 822,
+      "inputLabel": "原始 RGB 影像",
+      "resultLabel": "候选掩膜叠加",
+      "note": "RGB 与预测掩膜的尺寸、坐标系和空间变换一致；保留原始 RGB 显示，未作对比度拉伸或空间重采样。"
+    }
+  },
+  "ui": {
+    "eyebrow": "WORKBENCH / INTERFACE",
+    "title": "任务、工具与地图，在同一工作台中衔接。",
+    "intro": "真实界面展示会话控制、Agent 工具调用、OSS 文件管理与地图图层。两张截图分别展示运行过程与成果预览，未拼接为同一次完整执行。",
+    "overviewTitle": "工作台概览",
+    "overviewNote": "截图处于任务运行中，地图尚未加载该轮成果。可点击查看完整长图。",
+    "mapTitle": "地图与图层控制",
+    "mapNote": "独立的成果预览截图，可见红色预测掩膜与影像叠加、图层开关及透明度控制。"
   }
 }

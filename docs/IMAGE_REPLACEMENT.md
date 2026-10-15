@@ -1,42 +1,19 @@
-# 图片占位与替换清单
+# 图片与截图维护
 
-当前 P01—P05 都是抽象 SVG 占位图，不是真实 UI、遥感影像或识别结果。全部在站内，不依赖外部图片服务。架构图为实际绘制的结构示意，不需要用业务截图替换。
+本版所有页面素材均已替换为真实影像、模型结果或界面截图，不再展示业务图片占位。架构图仍为据工程关系绘制的结构示意。
 
-| 编号 | 内容源键名 | 对应占位文件 | 应替换为什么 | 建议成品尺寸 |
-| --- | --- | --- | --- | --- |
-| P01 | `media.workbench` | `p01-workbench.svg` | 当前稳定工作台截图，能看到任务、工具状态与成果地图；保留可读性，避免整页长图 | 1600 × 1000 左右 |
-| P02 | `media.inputs` | `p02-temporal-inputs.svg` | 同一案例、同一区域的前后时相真彩色并排图，标清 PRE / POST 和可公开日期 | 1600 × 900 左右 |
-| P03 | `media.landslide` | `p03-landslide.svg` | 同次模型推理的影像与候选滑坡主掩膜叠加；尽量可见图层说明 | 1600 × 1000 左右 |
-| P04 | `media.crack` | `p04-crack.svg` | 独立 RGB / UAV 裂缝案例的影像与对应候选主掩膜叠加；明确属于 LAN 案例 | 1600 × 1000 左右 |
-| P05 | `media.trace` | `p05-tool-trace.svg` | 一次真实工具调用的状态、输入输出摘要和成果记录；不用原始配置或完整日志 | 1600 × 1000 左右 |
+| 编号 | 用途 | 内容源与文件 |
+| --- | --- | --- |
+| P01 | 工作台界面概览与长图放大 | `media.workbench`；`workbench-overview.webp` / `workbench-full.webp` |
+| P02 | 事件前后真彩色 | `media.inputs`；`temporal-inputs.webp` |
+| P03 | 滑坡结果与对比 | `media.landslide`、`comparisons.landslide`；`landslide-*.webp/png` |
+| P04 | 裂缝结果与对比 | `media.crack`、`comparisons.crack`；`crack-*.webp/png` |
+| P05 | 真实工具调用片段 | `media.trace`；`agent-tool-trace.webp` |
+| P06 | 真实地图成果预览 | `media.mapPreview`；`map-preview-detail.webp` / `map-preview-ui.webp` |
+| 首页 | 滑坡叠加成果 | `media.hero`；`landslide-overlay.webp` |
 
-尺寸为建议，不是硬性要求。PNG/WebP 建议单张控制在数百 KB 至约 1 MB，确保识别细节和文字可读。展示区按统一比例容纳图片；放大可看原始比例。
+界面截图说明见 `UI_SCREENSHOTS.md`。TIFF 导图、26 通道映射和滑坡网格差异见 `DEMO_ASSETS.md`。
 
-## 替换示例
+更换真实案例时，输入图、叠加图和二值图必须同范围同画布；更新 `comparisons` 中的路径与尺寸。更换截图时可用 `fullSrc` 提供放大图，长图设 `scrollFull: true`。修改后使用 Actions 发布，或运行 `python scripts/build.py` 后上传生成首页。
 
-1. 把真实图片保存为 `assets/images/workbench-overview.webp`。
-2. 修改 `content.json` 中对应对象：
-
-```json
-{
-  "id": "P01",
-  "src": "./assets/images/workbench-overview.webp",
-  "alt": "真实工作台中任务、工具调用与地图成果同屏展示",
-  "caption": "工作台全貌 · 填写实际日期与运行模式",
-  "placeholder": false
-}
-```
-
-3. 为该素材更新 `assets/ASSET_CREDITS.json`：来源、日期、授权状态、案例对应、可视化处理、必要署名。
-4. 修改首页中有关“图片尚未补充”的介绍；确认不再适用后再删除该句。不要用未提供的图片路径或空下载链接替代占位。
-5. Actions 模式提交即可；分支发布模式运行 `python scripts/build.py` 后连同 `index.html` 一起上传。
-
-## 素材说明最少包含
-
-- 这是哪个案例、什么日期、LAN 还是 ECI；是界面截图、实际预测结果还是流程示意。
-- 图片是否允许公开、来源及必要署名；对外不必提供原始坐标或科研原始数据。
-- 输入与掩膜是否同一区域、同一次结果；裁剪和配色如何处理。
-
-真实截图应清除密钥、账号、内部服务地址、绝对路径等信息；位置及影像公开范围由项目本人确认。不能修改掩膜内容来改善效果，也不能把不同案例拼成一次完整执行。
-
-当前资料中 E1 会话只有摘要与运行记录，没有其配对浏览器截图和产物；其他历史图片不能冒充 E1 的同次成果。暂时只补历史图时，图注使用其真实日期与案例来源。
+本版不展示视频或视频占位；保留的在线体验入口属于独立服务跳转，与视频无关。

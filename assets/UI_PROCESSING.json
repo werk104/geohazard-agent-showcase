@@ -1,0 +1,94 @@
+{
+  "sourceFiles": [
+    {
+      "name": "图片1.png",
+      "sha256": "e91c16d4f7925578a810a271764cac0a5a079760c0a3f5de4dea850e0a3b64c9"
+    },
+    {
+      "name": "长截图.jpeg",
+      "sha256": "f887e7d2cf481a635d5c2f14725161ca2f4f09cf9dbe4450469a2d6e19cbbd73"
+    }
+  ],
+  "longScreenshot": {
+    "size": [
+      1713,
+      2791
+    ],
+    "redactionRectanglesXYXY": [
+      [
+        66,
+        266,
+        425,
+        315
+      ],
+      [
+        571,
+        424,
+        1579,
+        467
+      ],
+      [
+        571,
+        524,
+        1579,
+        567
+      ],
+      [
+        571,
+        624,
+        1579,
+        687
+      ],
+      [
+        571,
+        743,
+        1579,
+        805
+      ],
+      [
+        487,
+        938,
+        1515,
+        1037
+      ]
+    ],
+    "overviewCrop": [
+      24,
+      18,
+      1680,
+      1820
+    ],
+    "traceCrop": [
+      480,
+      335,
+      1605,
+      868
+    ]
+  },
+  "mapScreenshot": {
+    "size": [
+      1320,
+      1185
+    ],
+    "redactionRectanglesXYXY": [
+      [
+        380,
+        598,
+        970,
+        618
+      ]
+    ],
+    "detailCrop": [
+      355,
+      0,
+      1320,
+      550
+    ]
+  },
+  "notes": [
+    "Only deterministic crops and solid redactions; no reconstruction or generative retouching.",
+    "UI text/state outside redactions retained.",
+    "Separate screenshots do not prove a single end-to-end run.",
+    "No original unredacted screenshot or archive included in website package."
+  ]
+}

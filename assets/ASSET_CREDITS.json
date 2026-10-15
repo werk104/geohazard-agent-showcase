@@ -3,63 +3,85 @@
   "assets": [
     {
       "id": "P01",
-      "file": "./assets/images/p01-workbench.svg",
-      "type": "placeholder",
-      "source": "本站绘制的抽象素材占位图",
-      "publicationStatus": "placeholder_only",
+      "file": "./assets/images/workbench-overview.webp",
+      "type": "real_ui_screenshot",
+      "source": "用户提供的 界面截图.zip / 长截图.jpeg",
+      "publicationStatus": "used_in_requested_showcase_update",
       "caseId": null,
       "recordedAt": null,
       "deploymentMode": null,
-      "processing": "无真实业务影像或识别结果",
-      "attribution": "无需外部数据署名；替换为真实图像时填写来源"
+      "attribution": "业务影像与预测结果由项目本人提供；公开展示使用 PNG/WebP 副本",
+      "processing": "公开副本遮挡参数、会话编号和原始输出；概览裁剪，提供完整脱敏长图"
     },
     {
       "id": "P02",
-      "file": "./assets/images/p02-temporal-inputs.svg",
-      "type": "placeholder",
-      "source": "本站绘制的抽象素材占位图",
-      "publicationStatus": "placeholder_only",
-      "caseId": null,
+      "file": "./assets/images/temporal-inputs.webp",
+      "type": "real_data_visualization",
+      "source": "用户于本轮提供的 TIFF 与对应结果；未重新运行推理",
+      "publicationStatus": "used_in_requested_showcase_update",
+      "caseId": "landslide-example",
       "recordedAt": null,
       "deploymentMode": null,
-      "processing": "无真实业务影像或识别结果",
-      "attribution": "无需外部数据署名；替换为真实图像时填写来源"
+      "attribution": "业务影像与预测结果由项目本人提供；公开展示使用 PNG/WebP 副本",
+      "processing": "见 DEMO_PROCESSING.json 与 docs/DEMO_ASSETS.md"
     },
     {
       "id": "P03",
-      "file": "./assets/images/p03-landslide.svg",
-      "type": "placeholder",
-      "source": "本站绘制的抽象素材占位图",
-      "publicationStatus": "placeholder_only",
-      "caseId": null,
+      "file": "./assets/images/landslide-overlay.webp",
+      "type": "real_data_visualization",
+      "source": "用户于本轮提供的 TIFF 与对应结果；未重新运行推理",
+      "publicationStatus": "used_in_requested_showcase_update",
+      "caseId": "landslide-example",
       "recordedAt": null,
       "deploymentMode": null,
-      "processing": "无真实业务影像或识别结果",
-      "attribution": "无需外部数据署名；替换为真实图像时填写来源"
+      "attribution": "业务影像与预测结果由项目本人提供；公开展示使用 PNG/WebP 副本",
+      "processing": "见 DEMO_PROCESSING.json 与 docs/DEMO_ASSETS.md"
     },
     {
       "id": "P04",
-      "file": "./assets/images/p04-crack.svg",
-      "type": "placeholder",
-      "source": "本站绘制的抽象素材占位图",
-      "publicationStatus": "placeholder_only",
-      "caseId": null,
+      "file": "./assets/images/crack-overlay.webp",
+      "type": "real_data_visualization",
+      "source": "用户于本轮提供的 TIFF 与对应结果；未重新运行推理",
+      "publicationStatus": "used_in_requested_showcase_update",
+      "caseId": "crack-example",
       "recordedAt": null,
       "deploymentMode": null,
-      "processing": "无真实业务影像或识别结果",
-      "attribution": "无需外部数据署名；替换为真实图像时填写来源"
+      "attribution": "业务影像与预测结果由项目本人提供；公开展示使用 PNG/WebP 副本",
+      "processing": "见 DEMO_PROCESSING.json 与 docs/DEMO_ASSETS.md"
     },
     {
       "id": "P05",
-      "file": "./assets/images/p05-tool-trace.svg",
-      "type": "placeholder",
-      "source": "本站绘制的抽象素材占位图",
-      "publicationStatus": "placeholder_only",
+      "file": "./assets/images/agent-tool-trace.webp",
+      "type": "real_ui_screenshot_crop",
+      "source": "用户提供的 界面截图.zip / 长截图.jpeg",
+      "publicationStatus": "used_in_requested_showcase_update",
       "caseId": null,
       "recordedAt": null,
       "deploymentMode": null,
-      "processing": "无真实业务影像或识别结果",
-      "attribution": "无需外部数据署名；替换为真实图像时填写来源"
+      "attribution": "业务影像与预测结果由项目本人提供；公开展示使用 PNG/WebP 副本",
+      "processing": "从同一公开副本裁取工具调用片段；保留实际运行状态"
+    },
+    {
+      "id": "P03-H",
+      "file": "./assets/images/landslide-overlay.webp",
+      "type": "real_data_visualization",
+      "source": "用户于本轮提供的 TIFF 与对应结果；未重新运行推理",
+      "publicationStatus": "used_in_requested_showcase_update",
+      "caseId": "landslide-example",
+      "recordedAt": null,
+      "deploymentMode": null,
+      "attribution": "业务影像与预测结果由项目本人提供；公开展示使用 PNG/WebP 副本",
+      "processing": "见 DEMO_PROCESSING.json 与 docs/DEMO_ASSETS.md"
+    },
+    {
+      "id": "P06",
+      "file": "./assets/images/map-preview-detail.webp",
+      "type": "real_ui_screenshot_crop",
+      "source": "用户提供的 界面截图.zip / 图片1.png",
+      "publicationStatus": "used_in_requested_showcase_update",
+      "processing": "只遮挡内部路径，保留地图图层与预测掩膜原貌；完整公开界面见 map-preview-ui.webp",
+      "recordedAt": null,
+      "deploymentMode": null
     }
   ]
 }

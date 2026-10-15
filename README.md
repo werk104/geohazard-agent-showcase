@@ -3,7 +3,11 @@
 GitHub Pages 静态项目展示页。目标网址：
 https://werk104.github.io/geohazard-agent-showcase/
 
-本包是待上传的网站文件，不表示已有线上内容被替换。采用本地字体与资源，无 npm、CDN、地图瓦片、后端或模型依赖。五处业务图片为明确标注的占位图；架构图已绘制。个人贡献未确认，默认不展示；实时入口默认关闭。
+本包是待上传的网站文件，不表示已有线上内容被替换。采用本地字体与资源，无 npm、CDN、地图瓦片、后端或模型依赖。已补入真实双时相影像、滑坡与裂缝预测结果，提供静态对比滑块与二值掩膜查看；已加入 P01 工作台长图、P05 工具调用片段与 P06 地图预览界面，均为脱敏公开副本。架构图已绘制。个人贡献未确认，默认不展示；实时入口默认关闭。
+
+## 从上一版更新
+
+先看 `UPDATE_FROM_V2.md`：已有仓库可直接覆盖更新文件并提交；不必重新克隆或修改 Pages 发布设置。保留自己的 `.git/` 和 `config/site.json`。这次不包含原始 GeoTIFF。
 
 ## 首次上传：推荐使用 GitHub Actions
 
@@ -39,7 +43,7 @@ python scripts/build.py
 | --- | --- | --- |
 | 标题、简介、功能、流程、结果说明、图注 | `content.json` | Actions 模式直接提交；分支模式先运行生成脚本 |
 | 图片文件、路径、alt、占位标记 | `assets/images/` 与 `content.json → media` | 上传图片并修改路径，重新生成 |
-| 在线演示开关、地址、视频、仓库链接 | `config/site.json` | 直接提交，不需要重新生成首页 |
+| 在线演示开关、地址、仓库链接 | `config/site.json` | 直接提交，不需要重新生成首页 |
 | 布局、颜色、字号 | `css/styles.css` | 直接提交 |
 | LAN / ECI 架构图 | `assets/diagrams/architecture-*.svg` | 替换 SVG，保留准确图注 |
 
@@ -47,9 +51,9 @@ python scripts/build.py
 
 ## 替换图片
 
-详见 `docs/IMAGE_REPLACEMENT.md`。建议先补 P01 工作台和 P03 滑坡结果。可以仅提供授权的 PNG/WebP，不必提供原始地理数据。
+详见 `docs/IMAGE_REPLACEMENT.md`。P01—P06 均已补入真实素材，首页使用滑坡叠加成果；工作台长截图可点击后滚动查看。可以仅提供授权的 PNG/WebP，不必提供原始地理数据。
 
-替换完成后，除 `src`、`alt`、`caption`、`placeholder` 外，也应更新 `results.intro`、`demo.text`、`footer.credits` 等与“占位 / 尚未补图”有关的文案。
+更换真实案例时，同时更新 `media` 与 `comparisons` 的配对路径及尺寸，不能仅替换一张图。本轮已同步更新案例、界面展示和图注。
 
 ## 公开个人贡献
 
@@ -66,7 +70,7 @@ python scripts/build.py
 
 不要直接把此示例当作职责证明。
 
-## 在线演示与录屏
+## 在线交互入口
 
 `config/site.json` 的演示入口只有满足全部条件才显示：
 
@@ -79,9 +83,24 @@ python scripts/build.py
 
 关闭入口：将 `demo.enabled` 改回 `false`。不影响静态内容。
 
-录屏需同时填写 `video.url`、`video.poster`、`video.transcriptUrl` 才显示；推荐站内相对路径，例如 `./assets/videos/demo-main.mp4`、`./assets/images/demo-poster.webp`、`./docs/demo-transcript.html`。字幕或文字稿请自己补充真实内容。也可以使用无查询串的公开 HTTPS 文件地址。没有视频时保留诚实的待补充状态。
+本版已移除整个视频模块及其占位。旧 `config/site.json` 如仍带有 `video` 字段，会被忽略，不会生成视频入口或发起视频请求。无需为了本次更新覆盖你的已有演示地址配置。
 
 配置缺失、JSON 损坏或字段类型错误时，实时入口保持关闭。JavaScript 不可用时仍可阅读项目正文、两种架构和全部流程。
+
+## 真实素材与通道说明
+
+详细导出方法、26 通道映射、两种案例的空间配对及网格差异见 `docs/DEMO_ASSETS.md`；可复核摘要见 `assets/DEMO_PROCESSING.json`。
+
+`content.json → inputContract` 控制通道表；`comparisons` 控制每个案例的输入图、叠加图、二值图和原始导出尺寸。比较器仅裁切显示叠放图层，不会更改数据。原始 TIFF 不随站点分发。
+
+如需重新导图，可在自己保存原 TIFF 的环境安装 `scripts/requirements-assets.txt`，然后运行：
+
+```bash
+python -m pip install -r scripts/requirements-assets.txt
+python scripts/export_demo_assets.py --source "原始四份TIFF所在目录"
+```
+
+导图脚本只在本地重新制作素材时使用。常规 Pages 发布仍只需要 Python 标准库，不需要 GDAL、Rasterio 或 Pillow。
 
 ## 本地检查
 
@@ -96,10 +115,10 @@ python -m http.server 8088 --bind 127.0.0.1
 
 打开 http://127.0.0.1:8088/ 。不要通过双击 HTML 来测试配置读取；`file://` 通常无法读取 JSON。部署的 GitHub Pages 使用 HTTPS，不受此限制。
 
-建议在最终站点检查手机布局、导航、两种架构切换、六个流程步骤、图片放大、FAQ 和外链。可以在站点父目录起静态服务，以 `/geohazard-agent-showcase/` 前缀访问，检查项目子路径。
+建议在最终站点检查手机布局、导航、两种架构切换、六个流程步骤、图片放大、长截图滚动、FAQ 和外链。可以在站点父目录起静态服务，以 `/geohazard-agent-showcase/` 前缀访问，检查项目子路径。
 
 ## 本次交付验证
 
-交付时检查了生成文件一致性、图片 / SVG / JSON、站内资源与锚点、JavaScript 语法、URL / 配置降级逻辑，并用无浏览器的 DOM 模拟检查了流程切换、架构切换、导航及图片放大逻辑。当前环境没有可用的指定浏览器测试能力，因此未完成实际浏览器截图、移动端实机和线上发布验证；请以上传后的最终页面为准。
+交付时检查了生成文件一致性、图片 / SVG / JSON、站内资源与锚点、JavaScript 语法、URL / 配置降级逻辑，并用无浏览器的 DOM 模拟检查了流程切换、架构切换、导航、图片放大及对比分界线逻辑；导出图像已目视核查，并核对原始掩膜与显示图的像素对应。当前环境没有可用的指定浏览器测试能力，因此未完成实际浏览器截图、移动端实机和线上发布验证；请以上传后的最终页面为准。
 
 未操作远程 GitHub 仓库、未推送、未替换已上线页面、未启动业务服务或 GPU 任务。
