@@ -1,2 +1,105 @@
-# geohazard-agent-showcase
-GeoHazard Agent｜地质灾害遥感识别工作台项目展示
+# GeoHazard Agent｜地质灾害遥感识别工作台
+
+GitHub Pages 静态项目展示页。目标网址：
+https://werk104.github.io/geohazard-agent-showcase/
+
+本包是待上传的网站文件，不表示已有线上内容被替换。采用本地字体与资源，无 npm、CDN、地图瓦片、后端或模型依赖。五处业务图片为明确标注的占位图；架构图已绘制。个人贡献未确认，默认不展示；实时入口默认关闭。
+
+## 首次上传：推荐使用 GitHub Actions
+
+这种方式以后只改 `content.json`，提交后 GitHub 自动生成首页并发布，不需要本机安装 Python。
+
+1. 解压 ZIP，打开 `geohazard-agent-showcase` 目录。
+2. 进入现有仓库 `werk104/geohazard-agent-showcase` 的 `Settings → Pages`，将 `Source` 从 `Deploy from a branch` 改为 **GitHub Actions**。
+3. 回到 `Code → Add file → Upload files`，把目录**里面的文件与子目录**上传到仓库根目录，替换原 `index.html`。不要把外层 `geohazard-agent-showcase/` 再套进仓库。
+4. 检查根目录能看到 `index.html`、`content.json`、`config/`、`assets/`、`css/`、`js/`、`scripts/`，以及 `.github/workflows/pages.yml`。
+5. 如果网页上传漏掉 `.github`，使用 `Add file → Create new file` 创建 `.github/workflows/pages.yml`，复制本包对应文件内容后提交。同理可用此方式添加 `.nojekyll`，但 Actions 发布本身不依赖它。
+6. 提交到 `main`。在 `Actions → Build and deploy showcase` 查看结果，成功后刷新原网址。工作流未启动时，可以在其页面点 `Run workflow` 手动运行。
+
+默认 URL 不变。首次更新可能需要数分钟；旧缓存可强制刷新。
+
+Actions 配置参考：
+https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages
+
+## 保持原来的分支发布方式
+
+也可以继续使用 `main / (root)`：上传 `index.html`、`.nojekyll`、`assets/`、`css/`、`js/`、`config/`、`docs/`，**暂不上传 `.github/`**。本包首页已生成，可以直接显示。
+
+这种模式下，改文案后需要先运行：
+
+```bash
+python scripts/build.py
+```
+
+再将生成的 `index.html` 一起上传。仅修改 `content.json` 不会改变网页；仅修改配置链接或替换同路径图片则无需生成首页。
+
+## 日常维护：只记三个位置
+
+| 想修改的内容 | 修改位置 | 后续操作 |
+| --- | --- | --- |
+| 标题、简介、功能、流程、结果说明、图注 | `content.json` | Actions 模式直接提交；分支模式先运行生成脚本 |
+| 图片文件、路径、alt、占位标记 | `assets/images/` 与 `content.json → media` | 上传图片并修改路径，重新生成 |
+| 在线演示开关、地址、视频、仓库链接 | `config/site.json` | 直接提交，不需要重新生成首页 |
+| 布局、颜色、字号 | `css/styles.css` | 直接提交 |
+| LAN / ECI 架构图 | `assets/diagrams/architecture-*.svg` | 替换 SVG，保留准确图注 |
+
+所有核心文案以 `content.json` 为唯一编辑源。`index.html` 为生成结果，不建议手动改，否则下一次生成会覆盖。JSON 使用英文双引号，末项不要加逗号；段落正文不要写 HTML 标签。`page.updated` 是内容更新日期；`page.evidenceDate` 是功能资料的基准日期，不要未经复验就同时改新。
+
+## 替换图片
+
+详见 `docs/IMAGE_REPLACEMENT.md`。建议先补 P01 工作台和 P03 滑坡结果。可以仅提供授权的 PNG/WebP，不必提供原始地理数据。
+
+替换完成后，除 `src`、`alt`、`caption`、`placeholder` 外，也应更新 `results.intro`、`demo.text`、`footer.credits` 等与“占位 / 尚未补图”有关的文案。
+
+## 公开个人贡献
+
+在 `content.json → contribution` 中填写真实确认的职责，最后将 `enabled` 改成 `true`。例如：
+
+```json
+{
+  "enabled": true,
+  "title": "个人负责部分",
+  "intro": "在现有工程及团队协作基础上，主要承担以下工作。",
+  "items": ["填写本人确认的第一项职责", "填写本人确认的第二项职责"]
+}
+```
+
+不要直接把此示例当作职责证明。
+
+## 在线演示与录屏
+
+`config/site.json` 的演示入口只有满足全部条件才显示：
+
+- `demo.enabled` 为布尔值 `true`；
+- URL 为允许公开的 HTTPS 地址，无账号、密码、查询串或片段；
+- `deploymentMode` 为 `lan` 或 `eci`；
+- `lastVerifiedAt` 是管理员实际确认的含时区 ISO 8601 时间，例如 `2026-10-15T19:00:00+08:00`。
+
+本机地址、内网地址、保留地址和含查询串的 URL 会被拒绝。不支持把 API key 放入页面。`enabled` 仅代表入口发布意图，不是自动探活；该页面不向业务后端发送请求。
+
+关闭入口：将 `demo.enabled` 改回 `false`。不影响静态内容。
+
+录屏需同时填写 `video.url`、`video.poster`、`video.transcriptUrl` 才显示；推荐站内相对路径，例如 `./assets/videos/demo-main.mp4`、`./assets/images/demo-poster.webp`、`./docs/demo-transcript.html`。字幕或文字稿请自己补充真实内容。也可以使用无查询串的公开 HTTPS 文件地址。没有视频时保留诚实的待补充状态。
+
+配置缺失、JSON 损坏或字段类型错误时，实时入口保持关闭。JavaScript 不可用时仍可阅读项目正文、两种架构和全部流程。
+
+## 本地检查
+
+需要 Python 3.10 或更新版本；GitHub Actions 默认环境无需另装依赖。
+
+```bash
+python scripts/build.py
+python scripts/check.py
+node --check js/app.js
+python -m http.server 8088 --bind 127.0.0.1
+```
+
+打开 http://127.0.0.1:8088/ 。不要通过双击 HTML 来测试配置读取；`file://` 通常无法读取 JSON。部署的 GitHub Pages 使用 HTTPS，不受此限制。
+
+建议在最终站点检查手机布局、导航、两种架构切换、六个流程步骤、图片放大、FAQ 和外链。可以在站点父目录起静态服务，以 `/geohazard-agent-showcase/` 前缀访问，检查项目子路径。
+
+## 本次交付验证
+
+交付时检查了生成文件一致性、图片 / SVG / JSON、站内资源与锚点、JavaScript 语法、URL / 配置降级逻辑，并用无浏览器的 DOM 模拟检查了流程切换、架构切换、导航及图片放大逻辑。当前环境没有可用的指定浏览器测试能力，因此未完成实际浏览器截图、移动端实机和线上发布验证；请以上传后的最终页面为准。
+
+未操作远程 GitHub 仓库、未推送、未替换已上线页面、未启动业务服务或 GPU 任务。

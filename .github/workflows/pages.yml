@@ -1,0 +1,43 @@
+name: Build and deploy showcase
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: pages
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Generate homepage
+        run: python3 scripts/build.py
+      - name: Check local assets and content
+        run: python3 scripts/check.py
+      - name: Check browser script syntax
+        run: node --check js/app.js
+      - name: Stage static assets
+        run: python3 scripts/package_site.py
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+      - name: Upload static site
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4

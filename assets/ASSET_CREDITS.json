@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "assets": [
+    {
+      "id": "P01",
+      "file": "./assets/images/p01-workbench.svg",
+      "type": "placeholder",
+      "source": "本站绘制的抽象素材占位图",
+      "publicationStatus": "placeholder_only",
+      "caseId": null,
+      "recordedAt": null,
+      "deploymentMode": null,
+      "processing": "无真实业务影像或识别结果",
+      "attribution": "无需外部数据署名；替换为真实图像时填写来源"
+    },
+    {
+      "id": "P02",
+      "file": "./assets/images/p02-temporal-inputs.svg",
+      "type": "placeholder",
+      "source": "本站绘制的抽象素材占位图",
+      "publicationStatus": "placeholder_only",
+      "caseId": null,
+      "recordedAt": null,
+      "deploymentMode": null,
+      "processing": "无真实业务影像或识别结果",
+      "attribution": "无需外部数据署名；替换为真实图像时填写来源"
+    },
+    {
+      "id": "P03",
+      "file": "./assets/images/p03-landslide.svg",
+      "type": "placeholder",
+      "source": "本站绘制的抽象素材占位图",
+      "publicationStatus": "placeholder_only",
+      "caseId": null,
+      "recordedAt": null,
+      "deploymentMode": null,
+      "processing": "无真实业务影像或识别结果",
+      "attribution": "无需外部数据署名；替换为真实图像时填写来源"
+    },
+    {
+      "id": "P04",
+      "file": "./assets/images/p04-crack.svg",
+      "type": "placeholder",
+      "source": "本站绘制的抽象素材占位图",
+      "publicationStatus": "placeholder_only",
+      "caseId": null,
+      "recordedAt": null,
+      "deploymentMode": null,
+      "processing": "无真实业务影像或识别结果",
+      "attribution": "无需外部数据署名；替换为真实图像时填写来源"
+    },
+    {
+      "id": "P05",
+      "file": "./assets/images/p05-tool-trace.svg",
+      "type": "placeholder",
+      "source": "本站绘制的抽象素材占位图",
+      "publicationStatus": "placeholder_only",
+      "caseId": null,
+      "recordedAt": null,
+      "deploymentMode": null,
+      "processing": "无真实业务影像或识别结果",
+      "attribution": "无需外部数据署名；替换为真实图像时填写来源"
+    }
+  ]
+}

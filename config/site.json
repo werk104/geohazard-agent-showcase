@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "demo": {
+    "enabled": false,
+    "url": null,
+    "deploymentMode": "unconfirmed",
+    "statusText": "实时服务暂未开放",
+    "lastVerifiedAt": null
+  },
+  "video": {
+    "url": null,
+    "poster": null,
+    "transcriptUrl": null
+  },
+  "links": {
+    "githubRepositoryUrl": "https://github.com/werk104/geohazard-agent-showcase",
+    "projectDocsUrl": null
+  }
+}
