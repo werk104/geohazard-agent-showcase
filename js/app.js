@@ -2,12 +2,12 @@
 'use strict';
 (() => {
   const isObject = x => x !== null && typeof x === 'object' && !Array.isArray(x);
-  function publicHttps(value) {
+  function publicWebUrl(value, allowHttp = false) {
     if (typeof value !== 'string' || !value.trim()) return null;
     try {
       const u = new URL(value);
       const host = u.hostname.toLowerCase().replace(/\.$/, '');
-      if (u.protocol !== 'https:' || u.username || u.password || u.hash) return null;
+      if (!(u.protocol === 'https:' || (allowHttp === true && u.protocol === 'http:')) || u.username || u.password || u.hash) return null;
       if (!host.includes('.') || host.includes(':') || /(?:^|\.)(localhost|local|internal|test|invalid|example)$/.test(host)) return null;
       if (/^(?:10|127|0)\./.test(host) || /^169\.254\./.test(host) || /^192\.168\./.test(host) || /^172\.(?:1[6-9]|2\d|3[01])\./.test(host)) return null;
       if (/^100\.(?:6[4-9]|[7-9]\d|1[01]\d|12[0-7])\./.test(host) || /^(?:198\.(?:18|19)|192\.0\.0)\./.test(host)) return null;
@@ -21,6 +21,8 @@
       return u.href;
     } catch (_) { return null; }
   }
+  const publicHttps = value => publicWebUrl(value, false);
+  const publicDemoUrl = (value, allowHttp = false) => publicWebUrl(value, allowHttp === true);
   function assetUrl(value, base) {
     if (typeof value !== 'string' || !value.trim()) return null;
     if (value.startsWith('https://')) return publicHttps(value);
@@ -41,10 +43,11 @@
       (c.demo.url === null || typeof c.demo.url === 'string') &&
       ['lan','eci','unconfirmed'].includes(c.demo.deploymentMode) && typeof c.demo.statusText === 'string' &&
       (c.demo.lastVerifiedAt === null || confirmedDate(c.demo.lastVerifiedAt)) &&
+      (c.demo.allowHttp === undefined || typeof c.demo.allowHttp === 'boolean') &&
       isObject(c.links) && ['githubRepositoryUrl','projectDocsUrl'].every(k=>c.links[k]===null || typeof c.links[k]==='string');
   }
   // Pure validation helpers can also be checked with Node, without a browser or npm packages.
-  if (typeof module !== 'undefined' && module.exports) module.exports = { publicHttps, assetUrl, confirmedDate, configValid };
+  if (typeof module !== 'undefined' && module.exports) module.exports = { publicHttps, publicDemoUrl, assetUrl, confirmedDate, configValid };
   if (typeof document === 'undefined') return;
   const $ = s => document.querySelector(s);
   const all = s => [...document.querySelectorAll(s)];
@@ -120,12 +123,17 @@
       const response=await fetch(new URL('./config/site.json',document.baseURI),{cache:'no-store',credentials:'omit'});
       if(!response.ok)throw new Error('CONFIG_UNAVAILABLE');
       const c=await response.json();if(!configValid(c))throw new Error('CONFIG_INVALID');
-      const demoUrl=publicHttps(c.demo.url);
-      if(c.demo.enabled===true && demoUrl && ['lan','eci'].includes(c.demo.deploymentMode) && confirmedDate(c.demo.lastVerifiedAt)) {
+      const demoUrl=publicDemoUrl(c.demo.url,c.demo.allowHttp===true);
+      if(c.demo.enabled===true && demoUrl && ['lan','eci'].includes(c.demo.deploymentMode)) {
         attachLink('#live-link',demoUrl);
+        attachLink('#nav-live-link',demoUrl);
+        $('#nav-live-link').setAttribute('target','_blank');
+        $('#nav-live-link').setAttribute('rel','noopener noreferrer');
+        $('#nav-live-link').setAttribute('aria-label','在新窗口打开在线工作台');
         $('#demo-status').textContent=c.demo.statusText || '实时演示入口已配置';
         $('.demo-status').classList.add('available');
-        $('#demo-verified').textContent=`${c.demo.deploymentMode==='lan'?'LAN GPU API':'OSS + ECI'} · 最近人工确认：${c.demo.lastVerifiedAt}`;
+        const verification=confirmedDate(c.demo.lastVerifiedAt)?`最近人工确认：${c.demo.lastVerifiedAt}`:'地址由项目本人提供';
+        $('#demo-verified').textContent=`${c.demo.deploymentMode==='lan'?'LAN GPU API':'OSS + ECI'} · ${new URL(demoUrl).protocol==='http:'?'HTTP':'HTTPS'} · ${verification}`;
         $('#demo-verified').hidden=false;
       } else if(c.demo.enabled===false && c.demo.statusText) $('#demo-status').textContent=c.demo.statusText;
       attachLink('#repository-link',publicHttps(c.links.githubRepositoryUrl));

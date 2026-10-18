@@ -4,12 +4,12 @@
 
 | 编号 | 用途 | 内容源与文件 |
 | --- | --- | --- |
-| P01 | 工作台界面概览与长图放大 | `media.workbench`；`workbench-overview.webp` / `workbench-full.webp` |
+| P01 | 工作台界面概览与长图放大 | `media.workbench`；`workbench-overview-v4.webp` / `workbench-full-v4.webp` |
 | P02 | 事件前后真彩色 | `media.inputs`；`temporal-inputs.webp` |
 | P03 | 滑坡结果与对比 | `media.landslide`、`comparisons.landslide`；`landslide-*.webp/png` |
 | P04 | 裂缝结果与对比 | `media.crack`、`comparisons.crack`；`crack-*.webp/png` |
-| P05 | 真实工具调用片段 | `media.trace`；`agent-tool-trace.webp` |
-| P06 | 真实地图成果预览 | `media.mapPreview`；`map-preview-detail.webp` / `map-preview-ui.webp` |
+| P05 | 真实会话结果摘要 | `media.trace`；`agent-session-summary-v4.webp` |
+| P06 | 真实地图成果预览 | `media.mapPreview`；`map-preview-detail-v4.webp` / `map-preview-ui-v4.webp` |
 | 首页 | 滑坡叠加成果 | `media.hero`；`landslide-overlay.webp` |
 
 界面截图说明见 `UI_SCREENSHOTS.md`。TIFF 导图、26 通道映射和滑坡网格差异见 `DEMO_ASSETS.md`。

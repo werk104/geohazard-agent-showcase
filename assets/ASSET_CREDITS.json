@@ -3,15 +3,15 @@
   "assets": [
     {
       "id": "P01",
-      "file": "./assets/images/workbench-overview.webp",
+      "file": "./assets/images/workbench-overview-v4.webp",
       "type": "real_ui_screenshot",
-      "source": "用户提供的 界面截图.zip / 长截图.jpeg",
+      "source": "用户提供的 长截图2.jpeg 与同次历史会话记录",
       "publicationStatus": "used_in_requested_showcase_update",
       "caseId": null,
-      "recordedAt": null,
-      "deploymentMode": null,
+      "recordedAt": "2026-10-17",
+      "deploymentMode": "eci",
       "attribution": "业务影像与预测结果由项目本人提供；公开展示使用 PNG/WebP 副本",
-      "processing": "公开副本遮挡参数、会话编号和原始输出；概览裁剪，提供完整脱敏长图"
+      "processing": "固定裁剪与会话编号遮挡，其他内容保持原样；详见 UI_PROCESSING.json"
     },
     {
       "id": "P02",
@@ -51,15 +51,15 @@
     },
     {
       "id": "P05",
-      "file": "./assets/images/agent-tool-trace.webp",
+      "file": "./assets/images/agent-session-summary-v4.webp",
       "type": "real_ui_screenshot_crop",
-      "source": "用户提供的 界面截图.zip / 长截图.jpeg",
+      "source": "用户提供的 长截图2.jpeg 与同次历史会话记录",
       "publicationStatus": "used_in_requested_showcase_update",
       "caseId": null,
-      "recordedAt": null,
-      "deploymentMode": null,
+      "recordedAt": "2026-10-17",
+      "deploymentMode": "eci",
       "attribution": "业务影像与预测结果由项目本人提供；公开展示使用 PNG/WebP 副本",
-      "processing": "从同一公开副本裁取工具调用片段；保留实际运行状态"
+      "processing": "固定裁剪与会话编号遮挡，其他内容保持原样；详见 UI_PROCESSING.json"
     },
     {
       "id": "P03-H",
@@ -75,13 +75,21 @@
     },
     {
       "id": "P06",
-      "file": "./assets/images/map-preview-detail.webp",
+      "file": "./assets/images/map-preview-detail-v4.webp",
       "type": "real_ui_screenshot_crop",
-      "source": "用户提供的 界面截图.zip / 图片1.png",
+      "source": "用户提供的 长截图2.jpeg 与同次历史会话记录",
       "publicationStatus": "used_in_requested_showcase_update",
-      "processing": "只遮挡内部路径，保留地图图层与预测掩膜原貌；完整公开界面见 map-preview-ui.webp",
-      "recordedAt": null,
-      "deploymentMode": null
+      "processing": "固定裁剪与会话编号遮挡，其他内容保持原样；详见 UI_PROCESSING.json",
+      "recordedAt": "2026-10-17",
+      "deploymentMode": "eci"
+    },
+    {
+      "id": "HISTORY-20261017",
+      "file": "./assets/SESSION_EVIDENCE_20261017.json",
+      "type": "sanitized_historical_summary",
+      "source": "用户提供的对应会话归档",
+      "publicationStatus": "summary_only",
+      "processing": "仅白名单提取工具名、业务状态、输入通道数与 ECI 退出码；无原始日志"
     }
   ]
 }

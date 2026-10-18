@@ -2,7 +2,7 @@
   "page": {
     "title": "GeoHazard Agent｜地质灾害遥感识别工作台",
     "description": "连接自然语言、遥感数据处理、远程 GPU 推理与地图成果的地质灾害遥感识别工作台。",
-    "updated": "2026-10-15",
+    "updated": "2026-10-17",
     "evidenceDate": "2026-10-15",
     "brand": "GeoHazard Agent",
     "subtitle": "地质灾害遥感识别工作台"
@@ -97,7 +97,7 @@
     "intro": "Agent 通过 MCP 调用数据与栅格服务，再连接远程推理。结果经应用侧处理后进入成果管理与地图展示。",
     "lanCaption": "LAN 路径：应用侧通过上传、提交、轮询和下载连接 GPU API，并校验接收的主掩膜。",
     "eciCaption": "OSS + ECI 路径：应用侧组织滑坡推理容器作业，从 OSS 衔接输入与成果；不同于 LAN 的 /jobs 协议。",
-    "eciNote": "云端路径已有实现说明；资料基准日的新版云镜像仍待实际构建与云端验收。本图不表示当前服务在线。"
+    "eciNote": "2026-10-17 的配套历史会话记录了 ECI 滑坡推理成功及后续预览请求；具体镜像版本与其他路径的验收范围仍分别记录。"
   },
   "workflow": {
     "title": "从任务描述，到可以检查的地图成果。",
@@ -157,13 +157,13 @@
   "media": {
     "workbench": {
       "id": "P01",
-      "src": "./assets/images/workbench-overview.webp",
-      "alt": "真实 RSchat-GeoPreviewer 界面：会话控制、Agent 工具调用、OSS 文件管理与地图面板；截图处于运行中",
-      "caption": "P01 · 真实工作台概览｜运行中的界面截图，参数与会话编号已遮挡；点击查看完整长图",
+      "src": "./assets/images/workbench-overview-v4.webp",
+      "alt": "2026年10月17日真实工作台：会话结果摘要、OSS 文件管理与已显示滑坡候选掩膜的地图面板",
+      "caption": "P01 · 2026-10-17 工作台历史截图｜配套会话记录可核对，点击查看完整长图",
       "placeholder": false,
-      "fullSrc": "./assets/images/workbench-full.webp",
-      "width": 1656,
-      "height": 1802,
+      "fullSrc": "./assets/images/workbench-full-v4.webp",
+      "width": 1210,
+      "height": 1322,
       "scrollFull": true
     },
     "inputs": {
@@ -195,12 +195,12 @@
     },
     "trace": {
       "id": "P05",
-      "src": "./assets/images/agent-tool-trace.webp",
-      "alt": "真实工具调用记录片段，可见两次影像获取完成以及栅格组合启动；参数与原始输出内容已遮挡",
-      "caption": "P05 · 真实工具调用片段｜显示数据获取完成与栅格组合启动，参数与原始输出内容已遮挡",
+      "src": "./assets/images/agent-session-summary-v4.webp",
+      "alt": "真实历史会话的执行结果摘要表：两次影像获取、双时相组合、ECI 推理与预览请求均记录 success",
+      "caption": "P05 · 2026-10-17 会话结果摘要｜表中状态已与配套工具返回核对",
       "placeholder": false,
-      "width": 1125,
-      "height": 533
+      "width": 828,
+      "height": 435
     },
     "hero": {
       "id": "P03-H",
@@ -213,13 +213,13 @@
     },
     "mapPreview": {
       "id": "P06",
-      "src": "./assets/images/map-preview-detail.webp",
-      "fullSrc": "./assets/images/map-preview-ui.webp",
-      "alt": "真实 GeoPreviewer 地图预览，影像与红色滑坡预测图层叠加，支持图层开关和透明度调整",
-      "caption": "P06 · 地图成果预览｜独立界面截图，内部路径已遮挡；点击查看完整界面",
+      "src": "./assets/images/map-preview-detail-v4.webp",
+      "fullSrc": "./assets/images/map-preview-ui-v4.webp",
+      "alt": "同次历史会话截图中的地图面板，显示红色滑坡候选掩膜及其图层开关",
+      "caption": "P06 · 同次会话的地图显示｜红色为候选掩膜，点击查看完整地图面板",
       "placeholder": false,
-      "width": 965,
-      "height": 550
+      "width": 856,
+      "height": 474
     }
   },
   "results": {
@@ -275,8 +275,8 @@
     "items": []
   },
   "demo": {
-    "title": "在线交互服务按需开放。",
-    "text": "可查看真实工作台截图、工具调用片段及滑坡与裂缝案例。在线入口连接独立部署的服务，是否开放由管理员配置。"
+    "title": "进入在线工作台，体验任务与成果衔接。",
+    "text": "在线入口由项目本人提供，将在新窗口打开独立运行的工作台。你也可以留在本页，查看真实界面、历史执行摘要和静态案例对比。"
   },
   "faq": [
     {
@@ -298,7 +298,7 @@
   ],
   "footer": {
     "note": "面向研究与技术演示。候选识别成果需专业复核。",
-    "credits": "真实影像、预测掩膜与界面截图由项目本人提供；界面中的参数、会话编号及内部路径已遮挡。"
+    "credits": "影像、预测掩膜与界面截图由项目本人提供；界面会话编号已遮挡，历史记录仅展示必要摘要。"
   },
   "inputContract": {
     "title": "26 通道：12 + 12 + 2",
@@ -391,10 +391,47 @@
   "ui": {
     "eyebrow": "WORKBENCH / INTERFACE",
     "title": "任务、工具与地图，在同一工作台中衔接。",
-    "intro": "真实界面展示会话控制、Agent 工具调用、OSS 文件管理与地图图层。两张截图分别展示运行过程与成果预览，未拼接为同一次完整执行。",
+    "intro": "本次长截图对应 2026-10-17 的真实历史会话：结果摘要、文件管理与地图显示在同一工作台衔接。下方提供经核对的简短执行记录。",
     "overviewTitle": "工作台概览",
-    "overviewNote": "截图处于任务运行中，地图尚未加载该轮成果。可点击查看完整长图。",
+    "overviewNote": "截图已显示会话结果摘要与候选掩膜；点击可滚动查看完整界面。会话编号已遮挡。",
     "mapTitle": "地图与图层控制",
-    "mapNote": "独立的成果预览截图，可见红色预测掩膜与影像叠加、图层开关及透明度控制。"
+    "mapNote": "与左侧长截图来自同一次会话，地图中可见候选掩膜及图层控制。",
+    "evidence": {
+      "title": "查看 2026-10-17 历史会话摘要",
+      "intro": "依据配套会话中五份工具返回整理。表中 success 是该次历史执行的记录状态，不是对当前在线服务的自动探测。",
+      "rows": [
+        {
+          "step": "事件前影像",
+          "tool": "retrieve_s2_terrain_data",
+          "status": "success",
+          "result": "14 通道数据成果"
+        },
+        {
+          "step": "事件后影像",
+          "tool": "retrieve_s2_terrain_data",
+          "status": "success",
+          "result": "14 通道数据成果"
+        },
+        {
+          "step": "双时相组合",
+          "tool": "stack_reorder_rasters",
+          "status": "success",
+          "result": "26 通道组合输入"
+        },
+        {
+          "step": "云端滑坡推理",
+          "tool": "run_landslide_detection",
+          "status": "success",
+          "result": "ECI 作业 exit_code = 0"
+        },
+        {
+          "step": "地图预览请求",
+          "tool": "preview_geospatial_data",
+          "status": "success",
+          "result": "创建候选掩膜预览；截图可见图层"
+        }
+      ],
+      "note": "该次组合输入为 409 × 341、26 通道。下方案例区保留此前独立 TIFF 样例，不将两组材料拼为同一次执行。"
+    }
   }
 }

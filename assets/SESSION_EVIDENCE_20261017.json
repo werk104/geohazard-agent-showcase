@@ -1,0 +1,51 @@
+{
+  "recordDate": "2026-10-17",
+  "source": "用户提供的同次历史会话记录与长截图2",
+  "archiveSHA256": "26c35798ce10ec948aa3a7a22824978514850620dde4ccde46f3be7ac046ba86",
+  "scope": "工具返回与截图对应的历史执行摘要，不包含原始日志或成果字节校验。",
+  "steps": [
+    {
+      "step": "事件前影像",
+      "tool": "retrieve_s2_terrain_data",
+      "status": "success",
+      "result": "14 通道数据成果"
+    },
+    {
+      "step": "事件后影像",
+      "tool": "retrieve_s2_terrain_data",
+      "status": "success",
+      "result": "14 通道数据成果"
+    },
+    {
+      "step": "双时相组合",
+      "tool": "stack_reorder_rasters",
+      "status": "success",
+      "result": "26 通道组合输入"
+    },
+    {
+      "step": "云端滑坡推理",
+      "tool": "run_landslide_detection",
+      "status": "success",
+      "result": "ECI 作业 exit_code = 0"
+    },
+    {
+      "step": "地图预览请求",
+      "tool": "preview_geospatial_data",
+      "status": "success",
+      "result": "创建候选掩膜预览；截图可见图层"
+    }
+  ],
+  "inputBandCounts": [
+    14,
+    14
+  ],
+  "stackBandCount": 26,
+  "inferenceInputSize": [
+    409,
+    341
+  ],
+  "eciExitCode": 0,
+  "screenshotShowsMask": true,
+  "rawArchivePublished": false,
+  "note": "此前 TIFF 案例区使用的是另一组提供的样例，不能将其与本次 409×341 输入混为同一次结果。"
+}

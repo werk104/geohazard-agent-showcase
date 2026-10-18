@@ -1,11 +1,12 @@
 {
   "schemaVersion": 1,
   "demo": {
-    "enabled": false,
-    "url": null,
-    "deploymentMode": "unconfirmed",
-    "statusText": "实时服务暂未开放",
-    "lastVerifiedAt": null
+    "enabled": true,
+    "url": "http://121.40.114.105:7860",
+    "deploymentMode": "eci",
+    "statusText": "在线体验入口已配置",
+    "lastVerifiedAt": null,
+    "allowHttp": true
   },
   "links": {
     "githubRepositoryUrl": "https://github.com/werk104/geohazard-agent-showcase",

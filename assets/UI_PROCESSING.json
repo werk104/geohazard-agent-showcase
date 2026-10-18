@@ -1,94 +1,46 @@
 {
-  "sourceFiles": [
-    {
-      "name": "图片1.png",
-      "sha256": "e91c16d4f7925578a810a271764cac0a5a079760c0a3f5de4dea850e0a3b64c9"
-    },
-    {
-      "name": "长截图.jpeg",
-      "sha256": "f887e7d2cf481a635d5c2f14725161ca2f4f09cf9dbe4450469a2d6e19cbbd73"
-    }
+  "sourceFile": "长截图2.jpeg",
+  "sourceSHA256": "b764d98b808b09241bd9199ce3614bd7032f45314001e15ba74efad9dab15d6e",
+  "sourceSize": [
+    1256,
+    2047
   ],
-  "longScreenshot": {
-    "size": [
-      1713,
-      2791
+  "redactionRectanglesXYXY": [
+    [
+      47,
+      196,
+      309,
+      226
+    ]
+  ],
+  "variants": {
+    "workbench-full-v4.webp": null,
+    "workbench-overview-v4.webp": [
+      22,
+      16,
+      1232,
+      1338
     ],
-    "redactionRectanglesXYXY": [
-      [
-        66,
-        266,
-        425,
-        315
-      ],
-      [
-        571,
-        424,
-        1579,
-        467
-      ],
-      [
-        571,
-        524,
-        1579,
-        567
-      ],
-      [
-        571,
-        624,
-        1579,
-        687
-      ],
-      [
-        571,
-        743,
-        1579,
-        805
-      ],
-      [
-        487,
-        938,
-        1515,
-        1037
-      ]
+    "agent-session-summary-v4.webp": [
+      359,
+      153,
+      1187,
+      588
     ],
-    "overviewCrop": [
-      24,
-      18,
-      1680,
-      1820
-    ],
-    "traceCrop": [
-      480,
+    "map-preview-ui-v4.webp": [
       335,
-      1605,
-      868
+      786,
+      1220,
+      1905
+    ],
+    "map-preview-detail-v4.webp": [
+      354,
+      862,
+      1210,
+      1336
     ]
   },
-  "mapScreenshot": {
-    "size": [
-      1320,
-      1185
-    ],
-    "redactionRectanglesXYXY": [
-      [
-        380,
-        598,
-        970,
-        618
-      ]
-    ],
-    "detailCrop": [
-      355,
-      0,
-      1320,
-      550
-    ]
-  },
-  "notes": [
-    "Only deterministic crops and solid redactions; no reconstruction or generative retouching.",
-    "UI text/state outside redactions retained.",
-    "Separate screenshots do not prove a single end-to-end run.",
-    "No original unredacted screenshot or archive included in website package."
-  ]
+  "recordDate": "2026-10-17",
+  "processing": "只进行固定裁剪与会话编号遮挡，其他像素保持原样；未重新生成 UI、重写文字或修改状态。",
+  "rawScreenshotPublished": false
 }
