@@ -1,136 +1,100 @@
 # GeoHazard Agent｜地质灾害遥感识别工作台
 
-GitHub Pages 静态项目展示页。目标网址：
-https://werk104.github.io/geohazard-agent-showcase/
+面向地质灾害遥感分析的 Agent 工作台，将自然语言任务、遥感数据处理、远程模型推理和地图成果查看连接起来，减少在独立脚本与 GIS 工具之间反复切换的操作。
 
-本包是待上传的网站文件，不表示已有线上内容被替换。采用本地字体与资源，无 npm、CDN、地图瓦片、后端或模型依赖。已补入真实双时相影像、滑坡与裂缝预测结果，提供静态对比滑块与二值掩膜查看；已加入 P01 工作台长图、P05 工具调用片段与 P06 地图预览界面，均为脱敏公开副本。架构图已绘制。个人贡献未确认，默认不展示；本版已按用户要求配置独立在线体验入口。
+**[项目展示](https://werk104.github.io/geohazard-agent-showcase/) · [在线体验](http://121.40.114.105:7860) · [个人负责部分](#个人负责部分)**
 
-## 从上一版更新
+> 本仓库维护项目的静态展示网站，包含页面源码、公开展示素材及构建部署脚本；不包含完整后端服务、模型权重与运行环境。在线工作台为独立部署的服务。
 
-先看 `UPDATE_FROM_V3.md`：已有仓库可直接覆盖更新文件并提交，不必重新克隆或修改 Pages 设置。保留 `.git/`；这次需要更新 `config/site.json` 的 `demo` 对象，并同步替换 `js/app.js`。不包含原始 GeoTIFF 或会话归档。
+## 项目概览
 
-## 首次上传：推荐使用 GitHub Actions
+围绕“提出任务 → 获取数据 → 处理栅格 → 执行识别 → 查看成果”的业务流程，Agent 通过 MCP 调用地理处理工具，将各环节的输入、执行状态和成果引用串联起来。
 
-这种方式以后只改 `content.json`，提交后 GitHub 自动生成首页并发布，不需要本机安装 Python。
+- **任务组织**：使用自然语言描述研究区、时间范围与识别目标，组织多步骤工具调用。
+- **数据准备**：衔接 Sentinel-2 影像、光谱指数与地形数据的获取、空间对齐和波段组合。
+- **模型接入**：通过独立推理服务执行滑坡或裂缝识别，应用侧负责提交任务和接收成果。
+- **成果查看**：在地图中叠加影像、矢量与预测掩膜，通过图层开关和透明度辅助人工检查。
+- **过程追踪**：关联工具返回状态、输入来源与输出成果，便于复查处理过程。
 
-1. 解压 ZIP，打开 `geohazard-agent-showcase` 目录。
-2. 进入现有仓库 `werk104/geohazard-agent-showcase` 的 `Settings → Pages`，将 `Source` 从 `Deploy from a branch` 改为 **GitHub Actions**。
-3. 回到 `Code → Add file → Upload files`，把目录**里面的文件与子目录**上传到仓库根目录，替换原 `index.html`。不要把外层 `geohazard-agent-showcase/` 再套进仓库。
-4. 检查根目录能看到 `index.html`、`content.json`、`config/`、`assets/`、`css/`、`js/`、`scripts/`，以及 `.github/workflows/pages.yml`。
-5. 如果网页上传漏掉 `.github`，使用 `Add file → Create new file` 创建 `.github/workflows/pages.yml`，复制本包对应文件内容后提交。同理可用此方式添加 `.nojekyll`，但 Actions 发布本身不依赖它。
-6. 提交到 `main`。在 `Actions → Build and deploy showcase` 查看结果，成功后刷新原网址。工作流未启动时，可以在其页面点 `Run workflow` 手动运行。
+## 工作台界面
 
-默认 URL 不变。首次更新可能需要数分钟；旧缓存可强制刷新。
+![GeoHazard Agent 工作台界面](assets/images/workbench-overview-v4.webp)
 
-Actions 配置参考：
-https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages
+工作台提供会话交互、工具执行信息、成果管理与地图预览。完整长截图和对应历史会话的公开摘要见[静态展示页](https://werk104.github.io/geohazard-agent-showcase/#interface)。
 
-## 保持原来的分支发布方式
+## 典型工作流
 
-也可以继续使用 `main / (root)`：上传 `index.html`、`.nojekyll`、`assets/`、`css/`、`js/`、`config/`、`docs/`，**暂不上传 `.github/`**。本包首页已生成，可以直接显示。
+1. 输入研究区范围、事件前后时间及识别目标。
+2. 分别获取前、后时相遥感数据，并补充所需指数与地形信息。
+3. 对齐空间网格，按约定顺序堆叠输入通道。
+4. 调用对应部署环境的模型推理服务。
+5. 接收预测成果，并在地图中叠加检查与下载。
 
-这种模式下，改文案后需要先运行：
+页面中的流程演示与图像比较为静态交互；实际数据处理及推理需进入独立在线工作台。
 
-```bash
-python scripts/build.py
-```
+## 部署架构
 
-再将生成的 `index.html` 一起上传。仅修改 `content.json` 不会改变网页；仅修改配置链接或替换同路径图片则无需生成首页。
-
-## 日常维护：只记三个位置
-
-| 想修改的内容 | 修改位置 | 后续操作 |
+| 部署方式 | 应用与计算的衔接 | 展示的任务范围 |
 | --- | --- | --- |
-| 标题、简介、功能、流程、结果说明、图注 | `content.json` | Actions 模式直接提交；分支模式先运行生成脚本 |
-| 图片文件、路径、alt、占位标记 | `assets/images/` 与 `content.json → media` | 上传图片并修改路径，重新生成 |
-| 在线演示开关、地址、仓库链接 | `config/site.json` | 直接提交，不需要重新生成首页 |
-| 布局、颜色、字号 | `css/styles.css` | 直接提交 |
-| LAN / ECI 架构图 | `assets/diagrams/architecture-*.svg` | 替换 SVG，保留准确图注 |
+| 局域网部署 | 应用侧与 MCP 工具通过远程 GPU API 上传数据、提交任务、轮询状态并接收成果 | 滑坡识别、RGB 裂缝识别 |
+| OSS + ECI 云端部署 | 应用侧通过 OSS 衔接输入与输出，由 ECI 容器作业执行推理 | 滑坡识别 |
 
-所有核心文案以 `content.json` 为唯一编辑源。`index.html` 为生成结果，不建议手动改，否则下一次生成会覆盖。JSON 使用英文双引号，末项不要加逗号；段落正文不要写 HTML 标签。`page.updated` 是内容更新日期；`page.evidenceDate` 是功能资料的基准日期，不要未经复验就同时改新。
+两种部署方式的工具集合与任务协议分别管理。架构图及说明见[系统架构](https://werk104.github.io/geohazard-agent-showcase/#architecture)。
 
-## 替换图片
+## 案例成果
 
-详见 `docs/IMAGE_REPLACEMENT.md`。P01—P06 均已补入真实素材，首页使用滑坡叠加成果；工作台长截图可点击后滚动查看。可以仅提供授权的 PNG/WebP，不必提供原始地理数据。
+### 滑坡识别
 
-更换真实案例时，同时更新 `media` 与 `comparisons` 的配对路径及尺寸，不能仅替换一张图。本轮已同步更新案例、界面展示和图注。
+展示事件前后 Sentinel-2 L2A 影像、预测掩膜及空间叠加结果。示例数据共 **26 通道**：
 
-## 公开个人贡献
+| 通道编号（从 1 开始） | 内容 |
+| --- | --- |
+| 1–10 | 事件前 B2、B3、B4、B5、B6、B7、B8、B8A、B11、B12 |
+| 11–12 | 事件前 NDVI、SCL |
+| 13–22 | 事件后 B2、B3、B4、B5、B6、B7、B8、B8A、B11、B12 |
+| 23–24 | 事件后 NDVI、SCL |
+| 25–26 | DEM、SLOPE |
 
-在 `content.json → contribution` 中填写真实确认的职责，最后将 `enabled` 改成 `true`。例如：
+26 通道为示例组合栅格的顺序；其中包含 SCL，具体模型输入仍按推理预设选择与处理。
 
-```json
-{
-  "enabled": true,
-  "title": "个人负责部分",
-  "intro": "在现有工程及团队协作基础上，主要承担以下工作。",
-  "items": ["填写本人确认的第一项职责", "填写本人确认的第二项职责"]
-}
-```
+![滑坡识别预测叠加结果](assets/images/landslide-overlay.webp)
 
-不要直接把此示例当作职责证明。
+### 裂缝识别
 
-## 在线交互入口
+展示 RGB 输入影像与裂缝预测掩膜的叠加结果。
 
-`config/site.json` 的 `demo` 对象集中管理在线入口。本版已设为：
+![裂缝识别预测叠加结果](assets/images/crack-overlay.webp)
 
-```json
-{
-  "enabled": true,
-  "url": "http://121.40.114.105:7860",
-  "allowHttp": true,
-  "deploymentMode": "eci",
-  "statusText": "在线体验入口已配置",
-  "lastVerifiedAt": null
-}
-```
+红色表示模型预测前景，不是人工标注真值。交互对比、二值预测图与素材处理说明见[案例成果](https://werk104.github.io/geohazard-agent-showcase/#results)及[案例素材文档](docs/DEMO_ASSETS.md)。
 
-在线按钮需 `enabled` 为布尔值 `true`、地址合法且模式为 `lan` 或 `eci`。默认接受公开 HTTPS 地址；HTTP 只在 `demo.allowHttp` 明确为 `true` 时允许用于在线入口。其他文档 / 仓库外链仍只接受 HTTPS，站内媒体继续使用本地相对路径。
+## 个人负责部分
 
-本机、内网、保留地址、带用户名密码、查询串或片段的 URL 会被拒绝。页面不放 API key，不嵌入服务，不自动请求模型、MCP 或健康接口。入口会在新窗口打开；配置状态不代表自动探活。
+在现有工程与团队协作基础上，主要负责 Agent 开发、MCP 工具体系接入及项目部署，具体职责如下。
 
-`lastVerifiedAt` 可为空，此时显示“地址由项目本人提供”。本人实际检查后，可填写带时区的 ISO 8601 时间，再显示“最近人工确认”。不能用网页加载时间伪造核实时间。
+1. **Agent 开发与任务编排**：负责遥感分析 Agent 的开发与工具调用流程集成，串联任务输入、工具执行和成果返回。
 
-关闭入口：将 `enabled` 改回 `false`。保持 HTTPS 默认约束：将 `allowHttp` 设为 `false`。配置缺失、损坏或字段类型错误时，入口保持关闭，静态正文仍可阅读。
+2. **MCP 工具封装与滑坡工作流开发**：负责项目全部 MCP 工具的封装，并开发滑坡识别工作流所需的数据获取、栅格堆叠与波段重排、推理调用和地图预览等工具。
 
-本版不展示视频，不保留视频占位。旧配置中的 `video` 字段会被忽略。
+3. **项目部署与服务联调**：负责局域网部署及 OSS + ECI 云端部署，完成应用、数据存储与推理服务之间的配置和联调。
 
-## 真实素材与通道说明
+## 主要技术
 
-详细导出方法、26 通道映射、两种案例的空间配对及网格差异见 `docs/DEMO_ASSETS.md`；可复核摘要见 `assets/DEMO_PROCESSING.json`。
+| 层级 | 技术与用途 |
+| --- | --- |
+| Agent 与任务组织 | Python、DeepAgents / LangGraph |
+| 工具接入 | MCP |
+| 地理数据处理 | GDAL、Rasterio |
+| 交互与地图 | Gradio、OpenLayers |
+| 推理与部署 | GPU API、Docker、OSS、ECI |
+| 本展示网站 | HTML、CSS、JavaScript、Python 构建脚本、GitHub Pages |
 
-`content.json → inputContract` 控制通道表；`comparisons` 控制每个案例的输入图、叠加图、二值图和原始导出尺寸。比较器仅裁切显示叠放图层，不会更改数据。原始 TIFF 不随站点分发。
+## 仓库范围与网站维护
 
-如需重新导图，可在自己保存原 TIFF 的环境安装 `scripts/requirements-assets.txt`，然后运行：
+本仓库用于项目介绍与公开成果展示。克隆本仓库可查看和修改展示网站；运行完整 Agent 工作台还需要另行配置后端工程、工具服务、模型与数据环境。
 
-```bash
-python -m pip install -r scripts/requirements-assets.txt
-python scripts/export_demo_assets.py --source "原始四份TIFF所在目录"
-```
+- [网站更新、构建与部署说明](docs/WEBSITE_MAINTENANCE.md)
+- [图片替换说明](docs/IMAGE_REPLACEMENT.md)
+- [案例素材与通道说明](docs/DEMO_ASSETS.md)
+- [工作台截图与历史会话摘要说明](docs/UI_SCREENSHOTS.md)
 
-导图脚本只在本地重新制作素材时使用。常规 Pages 发布仍只需要 Python 标准库，不需要 GDAL、Rasterio 或 Pillow。
-
-## 本地检查
-
-需要 Python 3.10 或更新版本；GitHub Actions 默认环境无需另装依赖。
-
-```bash
-python scripts/build.py
-python scripts/check.py
-node --check js/app.js
-python -m http.server 8088 --bind 127.0.0.1
-```
-
-打开 http://127.0.0.1:8088/ 。不要通过双击 HTML 来测试配置读取；`file://` 通常无法读取 JSON。部署的 GitHub Pages 使用 HTTPS，不受此限制。
-
-建议在最终站点检查手机布局、导航、两种架构切换、六个流程步骤、图片放大、长截图滚动、FAQ 和外链。可以在站点父目录起静态服务，以 `/geohazard-agent-showcase/` 前缀访问，检查项目子路径。
-
-## 历史会话与截图
-
-v4 已替换为 `长截图2.jpeg` 对应材料，并在界面区提供 2026-10-17 可展开摘要。资料提取范围见 `docs/UI_SCREENSHOTS.md`；原始归档不发布。新截图中的执行输入与原有 TIFF 案例区分别说明。
-
-## 本次交付验证
-
-交付时检查了生成文件一致性、图片 / SVG / JSON、站内资源与锚点、JavaScript 语法、URL / 配置降级逻辑，并用无浏览器的 DOM 模拟检查了流程切换、架构切换、导航、图片放大及对比分界线逻辑；导出图像已目视核查，并核对原始掩膜与显示图的像素对应。当前环境没有可用的指定浏览器测试能力，因此未完成实际浏览器截图、移动端实机和线上发布验证；请以上传后的最终页面为准。
-
-未操作远程 GitHub 仓库、未推送、未替换已上线页面、未启动业务服务或 GPU 任务。
+网页文案集中在 `content.json`，外部入口在 `config/site.json`，展示图片在 `assets/images/`。修改文案后由构建脚本生成 `index.html`；GitHub Actions 发布方式会自动执行构建。

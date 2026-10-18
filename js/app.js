@@ -137,6 +137,7 @@
         $('#demo-verified').hidden=false;
       } else if(c.demo.enabled===false && c.demo.statusText) $('#demo-status').textContent=c.demo.statusText;
       attachLink('#repository-link',publicHttps(c.links.githubRepositoryUrl));
+      attachLink('#nav-repository-link',publicHttps(c.links.githubRepositoryUrl));
       attachLink('#docs-link',publicHttps(c.links.projectDocsUrl));
     } catch (_) {
       // Missing/broken configuration fails closed. All generated core content remains visible.
