@@ -1,80 +1,58 @@
 # 展示网站维护说明
 
-GitHub Pages 静态项目展示页。目标网址：
-https://werk104.github.io/geohazard-agent-showcase/
+本仓库维护 GeoHazard Agent 的静态展示网站。项目功能、案例和个人职责见[项目介绍](../README.md)；本文件记录当前维护方式，历史迁移说明见文末归档。
 
-本包是待上传的网站文件，不表示已有线上内容被替换。采用本地字体与资源，无 npm、CDN、地图瓦片、后端或模型依赖。已补入真实双时相影像、滑坡与裂缝预测结果，提供静态对比滑块与二值掩膜查看；已加入 P01 工作台长图、P05 工具调用片段与 P06 地图预览界面，均为脱敏公开副本。架构图已绘制。个人职责已按项目本人确认的范围公开；本版已按用户要求配置独立在线体验入口。
+展示地址：https://werk104.github.io/geohazard-agent-showcase/
 
-## 从上一版更新
+下列命令均在仓库根目录执行。
 
-v4 素材更新参考仓库根目录的 `UPDATE_FROM_V3.md`：已有仓库可直接覆盖更新文件并提交，不必重新克隆或修改 Pages 设置。保留 `.git/`；这次需要更新 `config/site.json` 的 `demo` 对象，并同步替换 `js/app.js`。不包含原始 GeoTIFF 或会话归档。
+## 文件与职责
 
-## 首次上传：推荐使用 GitHub Actions
+| 修改目标 | 文件或目录 | 后续操作 |
+| --- | --- | --- |
+| 标题、功能、工作流、案例说明、个人职责 | `content.json` | 重新生成首页，或交由现有 Actions 构建 |
+| 项目介绍与个人职责 | `README.md` | 直接提交；职责表述与 `content.json` 保持一致 |
+| 在线入口、GitHub 链接 | `config/site.json` | 直接提交 |
+| 图片与截图 | `assets/images/`、`content.json → media / comparisons` | 同步更新路径、尺寸和说明，重新生成首页 |
+| 字号、布局与配色 | `css/styles.css` | 直接提交 |
+| 页面交互与配置加载 | `js/app.js` | 检查语法与交互后提交 |
+| 页面结构模板 | `scripts/build.py` | 修改后生成首页 |
+| 系统架构图 | `assets/diagrams/` | 修改 SVG 并核对图注 |
 
-这种方式以后只改 `content.json`，提交后 GitHub 自动生成首页并发布，不需要本机安装 Python。
+`content.json` 是网页文案的编辑源，`index.html` 是生成结果。不要只手改首页，否则下次构建会覆盖修改。`page.updated` 记录内容更新时间，`page.evidenceDate` 表示功能资料基准日期，不能因改文案而自动更新后者。
 
-1. 解压 ZIP，打开 `geohazard-agent-showcase` 目录。
-2. 进入现有仓库 `werk104/geohazard-agent-showcase` 的 `Settings → Pages`，将 `Source` 从 `Deploy from a branch` 改为 **GitHub Actions**。
-3. 回到 `Code → Add file → Upload files`，把目录**里面的文件与子目录**上传到仓库根目录，替换原 `index.html`。不要把外层 `geohazard-agent-showcase/` 再套进仓库。
-4. 检查根目录能看到 `index.html`、`content.json`、`config/`、`assets/`、`css/`、`js/`、`scripts/`，以及 `.github/workflows/pages.yml`。
-5. 如果网页上传漏掉 `.github`，使用 `Add file → Create new file` 创建 `.github/workflows/pages.yml`，复制本包对应文件内容后提交。同理可用此方式添加 `.nojekyll`，但 Actions 发布本身不依赖它。
-6. 提交到 `main`。在 `Actions → Build and deploy showcase` 查看结果，成功后刷新原网址。工作流未启动时，可以在其页面点 `Run workflow` 手动运行。
+## 日常更新与发布
 
-默认 URL 不变。首次更新可能需要数分钟；旧缓存可强制刷新。
+在工作区无未提交修改时，先同步现有仓库：
 
-Actions 配置参考：
-https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages
+```bash
+git status
+git pull --ff-only origin main
+```
 
-## 保持原来的分支发布方式
-
-也可以继续使用 `main / (root)`：上传 `index.html`、`.nojekyll`、`assets/`、`css/`、`js/`、`config/`、`docs/`，**暂不上传 `.github/`**。本包首页已生成，可以直接显示。
-
-这种模式下，改文案后需要先运行：
+修改对应文件后，本机有 Python 与 Node.js 时运行：
 
 ```bash
 python scripts/build.py
+python scripts/check.py
+node --check js/app.js
 ```
 
-再将生成的 `index.html` 一起上传。仅修改 `content.json` 不会改变网页；仅修改配置链接或替换同路径图片则无需生成首页。
+检查改动后，添加本次实际变更的文件并提交、推送。提交只保存到本地；推送成功才会更新远端。失败时先解决报错，不使用强制推送或硬重置。
 
-## 日常维护：只记三个位置
+### GitHub Actions 发布
 
-| 想修改的内容 | 修改位置 | 后续操作 |
-| --- | --- | --- |
-| 标题、简介、功能、流程、结果说明、图注 | `content.json` | Actions 模式直接提交；分支模式先运行生成脚本 |
-| 图片文件、路径、alt、占位标记 | `assets/images/` 与 `content.json → media` | 上传图片并修改路径，重新生成 |
-| 在线演示开关、地址、仓库链接 | `config/site.json` | 直接提交，不需要重新生成首页 |
-| 布局、颜色、字号 | `css/styles.css` | 直接提交 |
-| LAN / ECI 架构图 | `assets/diagrams/architecture-*.svg` | 替换 SVG，保留准确图注 |
+现有工作流是 `.github/workflows/pages.yml`，名称为 `Build and deploy showcase`。推送到 `main` 后，工作流生成并检查首页，将公开文件暂存至 `_site/`，再部署到 Pages。使用该方式时，仓库 `Settings → Pages → Source` 应为 `GitHub Actions`。
 
-所有核心文案以 `content.json` 为唯一编辑源。`index.html` 为生成结果，不建议手动改，否则下一次生成会覆盖。JSON 使用英文双引号，末项不要加逗号；段落正文不要写 HTML 标签。`page.updated` 是内容更新日期；`page.evidenceDate` 是功能资料的基准日期，不要未经复验就同时改新。
+本机没有 Python 或 Node.js 时，可以将内容修改交由现有工作流构建。提交后查看 Actions 结果，部署成功后刷新展示页。
 
-## 替换图片
+### 分支根目录发布
 
-详见 [图片替换说明](IMAGE_REPLACEMENT.md)。P01—P06 均已补入真实素材，首页使用滑坡叠加成果；工作台长截图可点击后滚动查看。可以仅提供授权的 PNG/WebP，不必提供原始地理数据。
+如果仓库仍使用 `main / (root)` 发布，应先在本机运行构建，并将生成的 `index.html` 一起提交。仅修改 `content.json` 不会更新已生成的页面。继续使用已有发布方式即可，不必因整理文档而切换 Pages 设置。
 
-更换真实案例时，同时更新 `media` 与 `comparisons` 的配对路径及尺寸，不能仅替换一张图。本轮已同步更新案例、界面展示和图注。
+## 在线体验与仓库入口
 
-## 维护个人职责
-
-当前职责已启用；修改时保持 `content.json` 与 README 中的职责描述一致。所有命令均在仓库根目录执行。
-
-在 `content.json → contribution` 中填写真实确认的职责，最后将 `enabled` 改成 `true`。例如：
-
-```json
-{
-  "enabled": true,
-  "title": "个人负责部分",
-  "intro": "在现有工程及团队协作基础上，主要承担以下工作。",
-  "items": ["填写本人确认的第一项职责", "填写本人确认的第二项职责"]
-}
-```
-
-不要直接把此示例当作职责证明。
-
-## 在线交互入口
-
-`config/site.json` 的 `demo` 对象集中管理在线入口。本版已设为：
+`config/site.json` 的 `demo` 对象控制在线体验。当前提供的配置为：
 
 ```json
 {
@@ -87,52 +65,54 @@ python scripts/build.py
 }
 ```
 
-在线按钮需 `enabled` 为布尔值 `true`、地址合法且模式为 `lan` 或 `eci`。默认接受公开 HTTPS 地址；HTTP 只在 `demo.allowHttp` 明确为 `true` 时允许用于在线入口。其他文档 / 仓库外链仍只接受 HTTPS，站内媒体继续使用本地相对路径。
+这是 `demo` 对象，不是完整配置。修改时保留 `schemaVersion` 和 `links`。HTTP 在线入口需要明确启用 `allowHttp`；改为 HTTPS 后可将其关闭。暂停入口时，将 `enabled` 设为 `false`。
 
-本机、内网、保留地址、带用户名密码、查询串或片段的 URL 会被拒绝。页面不放 API key，不嵌入服务，不自动请求模型、MCP 或健康接口。入口会在新窗口打开；配置状态不代表自动探活。
+`links.githubRepositoryUrl` 同时控制顶部 GitHub 入口和页脚仓库入口，当前值为 `https://github.com/werk104/geohazard-agent-showcase`。仓库及文档外链仅接受 HTTPS。
 
-`lastVerifiedAt` 可为空，此时显示“地址由项目本人提供”。本人实际检查后，可填写带时区的 ISO 8601 时间，再显示“最近人工确认”。不能用网页加载时间伪造核实时间。
+配置由浏览器读取，链接在新窗口打开。静态网站不会自动请求模型或检查业务服务健康状态。`lastVerifiedAt: null` 表示未填写人工核实时间；只有实际检查后才填写带时区的 ISO 8601 时间。配置读取失败时，静态正文仍可阅读，动态入口按降级逻辑处理。
 
-关闭入口：将 `enabled` 改回 `false`。保持 HTTPS 默认约束：将 `allowHttp` 设为 `false`。配置缺失、损坏或字段类型错误时，入口保持关闭，静态正文仍可阅读。
+## 图片、截图与素材说明
 
-本版不展示视频，不保留视频占位。旧配置中的 `video` 字段会被忽略。
+- [图片替换与路径对应](IMAGE_REPLACEMENT.md)
+- [26 通道组成、案例网格与导出说明](DEMO_ASSETS.md)
+- [界面截图及历史会话摘要](UI_SCREENSHOTS.md)
 
-## 真实素材与通道说明
+替换案例时，输入图、叠加图与二值掩膜必须保持一致的展示范围和画布，同步更新 `comparisons` 的路径与尺寸。长截图可配置 `fullSrc` 和 `scrollFull: true`。
 
-详细导出方法、26 通道映射、两种案例的空间配对及网格差异见 [案例素材说明](DEMO_ASSETS.md)；可复核摘要见 `assets/DEMO_PROCESSING.json`。
+`assets/ASSET_CREDITS.json`、`DEMO_PROCESSING.json`、`UI_PROCESSING.json` 与 `SESSION_EVIDENCE_20261017.json` 是素材来源、显示处理及公开历史摘要，应保留。历史执行记录不表示当前服务状态，也不构成模型精度评估。
 
-`content.json → inputContract` 控制通道表；`comparisons` 控制每个案例的输入图、叠加图、二值图和原始导出尺寸。比较器仅裁切显示叠放图层，不会更改数据。原始 TIFF 不随站点分发。
-
-如需重新导图，可在自己保存原 TIFF 的环境安装 `scripts/requirements-assets.txt`，然后运行：
+若需在保存原始 TIFF 的本机重新导图，使用：
 
 ```bash
 python -m pip install -r scripts/requirements-assets.txt
 python scripts/export_demo_assets.py --source "原始四份TIFF所在目录"
 ```
 
-导图脚本只在本地重新制作素材时使用。常规 Pages 发布仍只需要 Python 标准库，不需要 GDAL、Rasterio 或 Pillow。
+这些依赖仅用于重新制作素材，常规网站构建使用 Python 标准库。原始 TIFF、原始会话归档和模型权重不放入展示仓库。当前不展示视频或视频占位。
 
-## 本地检查
-
-需要 Python 3.10 或更新版本；GitHub Actions 默认环境无需另装依赖。
+## 本地预览与更新后核对
 
 ```bash
-python scripts/build.py
-python scripts/check.py
-node --check js/app.js
 python -m http.server 8088 --bind 127.0.0.1
 ```
 
-打开 http://127.0.0.1:8088/ 。不要通过双击 HTML 来测试配置读取；`file://` 通常无法读取 JSON。部署的 GitHub Pages 使用 HTTPS，不受此限制。
+打开 http://127.0.0.1:8088/ ，不要用双击 HTML 的方式检查配置加载。检查导航、GitHub 与在线体验链接、个人职责、图片放大、长图滚动、对比滑块和移动端布局。
 
-建议在最终站点检查手机布局、导航、两种架构切换、六个流程步骤、图片放大、长截图滚动、FAQ 和外链。可以在站点父目录起静态服务，以 `/geohazard-agent-showcase/` 前缀访问，检查项目子路径。
+`scripts/check.py` 检查资源、锚点和生成结果一致性，`node --check` 检查 JavaScript 语法；二者不能替代浏览器布局与实际线上访问检查。
 
-## 历史会话与截图
+## 定期整理
 
-v4 已替换为 `长截图2.jpeg` 对应材料，并在界面区提供 2026-10-17 可展开摘要。资料提取范围见 [界面截图说明](UI_SCREENSHOTS.md)；原始归档不发布。新截图中的执行输入与原有 TIFF 案例区分别说明。
+历史升级说明集中放入 `docs/archive/`，维护入口保持在本文件。新增图片前后应检查引用；已被新素材替代且未被页面、文档、素材清单或导出脚本引用的文件，可以从当前版本移除。单纯从当前版本删除文件不会清除 Git 历史中的旧文件。
 
-## 本次交付验证
+`scripts/build.py`、`check.py`、`package_site.py`、`export_demo_assets.py`、`requirements-assets.txt` 和 `.github/workflows/pages.yml` 仍有维护或发布用途，不属于应删除的历史遗留文件。`_site/` 与 Python 缓存属于生成物，不提交到 Git；现有 `.gitignore` 已覆盖它们。
 
-交付时检查了生成文件一致性、图片 / SVG / JSON、站内资源与锚点、JavaScript 语法、URL / 配置降级逻辑，并用无浏览器的 DOM 模拟检查了流程切换、架构切换、导航、图片放大及对比分界线逻辑；导出图像已目视核查，并核对原始掩膜与显示图的像素对应。当前环境没有可用的指定浏览器测试能力，因此未完成实际浏览器截图、移动端实机和线上发布验证；请以上传后的最终页面为准。
+## 历史更新归档
 
-未操作远程 GitHub 仓库、未推送、未替换已上线页面、未启动业务服务或 GPU 任务。
+以下文件保留原文，用于追溯当时的迁移过程。其中的覆盖清单、配置状态与执行命令只适用于对应历史版本；当前操作以上文为准。
+
+| 历史迁移 | 归档 |
+| --- | --- |
+| v2 → v3：界面截图及移除视频占位 | [UPDATE_FROM_V2.md](archive/UPDATE_FROM_V2.md) |
+| v3 → v4：新长截图、会话摘要及在线入口 | [UPDATE_FROM_V3.md](archive/UPDATE_FROM_V3.md) |
+
+v5 将 README 改为项目介绍、公开个人职责，并增加顶部 GitHub 入口；文档整理将上述两份迁移说明移至归档目录，清除无引用的旧占位图与旧界面截图。
